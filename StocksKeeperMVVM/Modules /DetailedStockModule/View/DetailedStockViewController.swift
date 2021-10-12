@@ -26,6 +26,7 @@ class DetailedStockViewController: UIViewController {
 
         view.addSubview(testView)
         testView.frame = view.bounds
+        testView.delegate = self
         
         start()
         updateViews()

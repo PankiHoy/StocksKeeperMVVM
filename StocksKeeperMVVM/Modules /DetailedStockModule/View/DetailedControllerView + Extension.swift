@@ -90,7 +90,7 @@ extension DetailedControllerView {
         bookMarkLabel.setImage(UIImage(systemName: "bookmark.fill"), for: .selected)
         
         bookMarkLabel.addTarget(self, action: #selector(addBookMark(sender:)), for: .touchUpInside)
-        bookMarkLabel.isSelected = bookmarked ?? false
+        bookMarkLabel.isSelected = false
         
         horizontalStack.addArrangedSubview(symbolLabel)
         horizontalStack.addArrangedSubview(bookMarkLabel)
@@ -157,10 +157,23 @@ extension DetailedControllerView {
     @objc func addBookMark(sender: UIButton) {
         if !sender.isSelected {
             sender.isSelected = true
-            dump("company added to bookmarks")
+            saveStock()
         } else {
+            sender.isSelected = false
             dump("already added")
         }
+    }
+    
+    func saveStock() {
+        guard let user = self.delegate.viewModel?.add(type: Stock.self) else { return }
+        guard let company = company else { return }
+        user.name = company.name
+        user.desctiption = company.description
+        user.symbol = company.symbol
+        user.day = company.day
+        user.dayBefore = company.dayBefore
+        user.bookmarked = true
+        delegate.viewModel?.save()
     }
     
     @objc func buyStock(sender: UITapGestureRecognizer, amount: Int) {

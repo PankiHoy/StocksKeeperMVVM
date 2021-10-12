@@ -9,8 +9,6 @@ import UIKit
 
 class BookmarkedStocksTableView: UITableView {
 
-    func makeTableView() {
-        
-    }
-
+    
+    
 }

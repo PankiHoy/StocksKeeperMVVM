@@ -17,9 +17,12 @@ class DetailedControllerView: UIView {
         }
     }
     
+    var company: DetailedViewData.CompanyOverview!// УБРАТЬ ЭТО НАХУЙ И СДЕЛАТЬ ПО НОРМАЛЬНОМУ
+    var delegate: DetailedStockViewController!
+    
     lazy var contentView = makeContentView()
     lazy var activityIndicator = makeActivityIndicator()
-    lazy var stackView = makeStackView(name: nil, symbol: nil, description: nil, day: nil, dayBefore: nil, bookmarked: nil)
+    var stackView: UIStackView!
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -41,6 +44,7 @@ class DetailedControllerView: UIView {
     
     func update(viewData: DetailedViewData.CompanyOverview?, isHidden: Bool) {
         stackView = makeStackView(name: viewData?.name, symbol: viewData?.symbol, description: viewData?.description, day: viewData?.day, dayBefore: viewData?.dayBefore, bookmarked: true)
+        company = viewData
     }
     
 }

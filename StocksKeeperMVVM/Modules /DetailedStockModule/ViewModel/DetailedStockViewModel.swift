@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 protocol DetailedStockViewModelProtocol {
     var updateViewData: ((DetailedViewData)->())? {get set }
@@ -15,11 +16,13 @@ protocol DetailedStockViewModelProtocol {
 final class DetailedStockViewModel: DetailedStockViewModelProtocol {
     public var updateViewData: ((DetailedViewData) -> ())?
     private var networkService: NetworkServiceProtocol?
+    private var coreDataManager: CoreDataManager?
     
     private var symbol: String!
     
-    init(_ networkService: NetworkServiceProtocol, _ symbol: String) {
+    init(_ networkService: NetworkServiceProtocol, _ coreDataManager: CoreDataManager, _ symbol: String) {
         self.networkService = networkService
+        self.coreDataManager = coreDataManager
         self.symbol = symbol
     }
     
@@ -40,5 +43,16 @@ final class DetailedStockViewModel: DetailedStockViewModelProtocol {
         })
     }
     
+    func add<T: NSManagedObject>(type: T.Type) -> T? {
+        return coreDataManager?.add(type)
+    }
     
+    func save() {
+        coreDataManager?.save()
+    }
+    
+    func fetchBookmarks() {
+        let bookmarks = coreDataManager?.fetch(Stock.self)
+        dump(bookmarks)
+    }
 }

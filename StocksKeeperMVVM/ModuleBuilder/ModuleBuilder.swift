@@ -9,19 +9,20 @@ import Foundation
 import UIKit
 
 class ModuleBuilder {
-    static func createMainModule() -> UIViewController {
+    let networkService = NetworkService()
+    let coreDataManager = CoreDataManager()
+    
+    func createMainModule() -> UIViewController {
         let view = MainViewController()
-        let networkService = NetworkService()
-        let viewModel = MainViewModel(networkService)
+        let viewModel = MainViewModel(networkService, coreDataManager)
         view.viewModel = viewModel
         
         return view
     }
     
-    static func createDetailedStockModule(withSymbol symbol: String) -> UIViewController {
+    func createDetailedStockModule(withSymbol symbol: String) -> UIViewController {
         let view = DetailedStockViewController()
-        let networkService = NetworkService()
-        let viewModel = DetailedStockViewModel(networkService, symbol)
+        let viewModel = DetailedStockViewModel(networkService, coreDataManager, symbol)
         view.viewModel = viewModel
         
         return view

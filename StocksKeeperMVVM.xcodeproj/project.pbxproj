@@ -26,7 +26,11 @@
 		D774954E271080E20003F14B /* DetailedStockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D774954D271080E20003F14B /* DetailedStockViewController.swift */; };
 		D77495502710896E0003F14B /* DetailedControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D774954F2710896E0003F14B /* DetailedControllerView.swift */; };
 		D7B21B522715B3950001C146 /* StocksBagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B21B512715B3950001C146 /* StocksBagViewModel.swift */; };
-		D7B21B552715B41F0001C146 /* BookmarkedStocksTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B21B542715B41F0001C146 /* BookmarkedStocksTableView.swift */; };
+		D7B21B552715B41F0001C146 /* BookmarkedStocksTableView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B21B542715B41F0001C146 /* BookmarkedStocksTableView + Extension.swift */; };
+		D7B21B572715B6570001C146 /* BookmarkedStocksTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B21B562715B6570001C146 /* BookmarkedStocksTableView.swift */; };
+		D7B21B5A2715B9B10001C146 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B21B592715B9B10001C146 /* CoreDataManager.swift */; };
+		D7B21B652715E1520001C146 /* Stock+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B21B632715E1520001C146 /* Stock+CoreDataClass.swift */; };
+		D7B21B662715E1520001C146 /* Stock+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B21B642715E1520001C146 /* Stock+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,7 +55,11 @@
 		D774954D271080E20003F14B /* DetailedStockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedStockViewController.swift; sourceTree = "<group>"; };
 		D774954F2710896E0003F14B /* DetailedControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedControllerView.swift; sourceTree = "<group>"; };
 		D7B21B512715B3950001C146 /* StocksBagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksBagViewModel.swift; sourceTree = "<group>"; };
-		D7B21B542715B41F0001C146 /* BookmarkedStocksTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkedStocksTableView.swift; sourceTree = "<group>"; };
+		D7B21B542715B41F0001C146 /* BookmarkedStocksTableView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookmarkedStocksTableView + Extension.swift"; sourceTree = "<group>"; };
+		D7B21B562715B6570001C146 /* BookmarkedStocksTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkedStocksTableView.swift; sourceTree = "<group>"; };
+		D7B21B592715B9B10001C146 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		D7B21B632715E1520001C146 /* Stock+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stock+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D7B21B642715E1520001C146 /* Stock+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stock+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,7 +157,8 @@
 			isa = PBXGroup;
 			children = (
 				D774953427105B9D0003F14B /* MainViewController.swift */,
-				D7B21B542715B41F0001C146 /* BookmarkedStocksTableView.swift */,
+				D7B21B562715B6570001C146 /* BookmarkedStocksTableView.swift */,
+				D7B21B542715B41F0001C146 /* BookmarkedStocksTableView + Extension.swift */,
 				D774953B271061670003F14B /* SearchBar.swift */,
 				D774953D271061760003F14B /* SearchBar + Extension .swift */,
 			);
@@ -159,6 +168,8 @@
 		D774953127105AE90003F14B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D7B21B632715E1520001C146 /* Stock+CoreDataClass.swift */,
+				D7B21B642715E1520001C146 /* Stock+CoreDataProperties.swift */,
 				D774953227105AFB0003F14B /* CompaniesData.swift */,
 			);
 			path = Model;
@@ -168,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				D774953927105C3C0003F14B /* NetworkService .swift */,
+				D7B21B592715B9B10001C146 /* CoreDataManager.swift */,
 			);
 			path = "Service ";
 			sourceTree = "<group>";
@@ -307,10 +319,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				D74C3CBF2713545D00FE7B66 /* UIFont + Extension.swift in Sources */,
-				D7B21B552715B41F0001C146 /* BookmarkedStocksTableView.swift in Sources */,
+				D7B21B652715E1520001C146 /* Stock+CoreDataClass.swift in Sources */,
+				D7B21B552715B41F0001C146 /* BookmarkedStocksTableView + Extension.swift in Sources */,
 				D7749515271045050003F14B /* AppDelegate.swift in Sources */,
 				D77495502710896E0003F14B /* DetailedControllerView.swift in Sources */,
 				D774953C271061670003F14B /* SearchBar.swift in Sources */,
+				D7B21B662715E1520001C146 /* Stock+CoreDataProperties.swift in Sources */,
 				D7B21B522715B3950001C146 /* StocksBagViewModel.swift in Sources */,
 				D7749541271061DB0003F14B /* DinamicTableView.swift in Sources */,
 				D774954C27107FEB0003F14B /* DetailedViewData.swift in Sources */,
@@ -318,11 +332,13 @@
 				D774953A27105C3C0003F14B /* NetworkService .swift in Sources */,
 				D774951F271045050003F14B /* StocksKeeperMVVM.xcdatamodeld in Sources */,
 				D774954A27107DBE0003F14B /* DetailedStockViewModel.swift in Sources */,
+				D7B21B572715B6570001C146 /* BookmarkedStocksTableView.swift in Sources */,
 				D774953327105AFC0003F14B /* CompaniesData.swift in Sources */,
 				D774953527105B9D0003F14B /* MainViewController.swift in Sources */,
 				D774954E271080E20003F14B /* DetailedStockViewController.swift in Sources */,
 				D74C3CBD27134DEF00FE7B66 /* DetailedControllerView + Extension.swift in Sources */,
 				D774953727105BA70003F14B /* MainViewModel.swift in Sources */,
+				D7B21B5A2715B9B10001C146 /* CoreDataManager.swift in Sources */,
 				D774953E271061760003F14B /* SearchBar + Extension .swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

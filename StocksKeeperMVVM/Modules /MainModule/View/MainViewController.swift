@@ -9,11 +9,20 @@ import UIKit
 
 class MainViewController: UIViewController {
     var viewModel: MainViewModelProtocol!
+    
     private var searchBar = SearchBar()
-    private var bookmarkedStocksTableView = BookmarkedStocksTableView()
-
+    private var bookmarkedStocksTableView = BookmarkedStocksTableView.makeTableView()
+    
+    var bookmarks: [Stock]!
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        bookmarks = viewModel.fetchBookmarks()
+        configureSearchBar()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         setup()
     }
     
@@ -21,6 +30,7 @@ class MainViewController: UIViewController {
         view.backgroundColor = .white
         configureTabBar()
         configureSearchBar()
+        configureBookmarksTableView()
     }
     
     func configureTabBar() {
@@ -31,16 +41,31 @@ class MainViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .black
         title = "Favorites"
     }
-
+    
     func configureSearchBar() {
+        initiateSearch(false)
         searchBar.showsCancelButton = false
         searchBar.text = ""
         searchBar.delegate = self
-        navigationItem.titleView = nil
         navigationItem.rightBarButtonItem = (UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"),
                                                              style: .plain,
                                                              target: self,
                                                              action: #selector(searchButtonTapped(sender:))))
+    }
+    
+    func configureBookmarksTableView() {
+        bookmarkedStocksTableView.register(UITableViewCell.self, forCellReuseIdentifier: "bookMarkCell")
+        bookmarkedStocksTableView.delegate = self
+        bookmarkedStocksTableView.dataSource = self
+        
+        view.addSubview(bookmarkedStocksTableView)
+        bookmarkedStocksTableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            bookmarkedStocksTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            bookmarkedStocksTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            bookmarkedStocksTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+        ])
     }
     
     func initiateSearch(_ check: Bool) {
@@ -64,6 +89,7 @@ class MainViewController: UIViewController {
             if view.subviews.contains(searchBar.searchTableView) {
                 view.willRemoveSubview(searchBar.searchTableView)
                 searchBar.searchTableView.removeFromSuperview()
+                navigationItem.titleView = nil
             }
         }
     }
@@ -80,6 +106,10 @@ class MainViewController: UIViewController {
         searchBar.showsCancelButton = true
         searchBar.becomeFirstResponder()
         navigationItem.rightBarButtonItem = nil
+    }
+    
+    func fetchBookMarks() {
+        bookmarks = viewModel.fetchBookmarks()
     }
 }
 
@@ -100,21 +130,39 @@ extension MainViewController: UISearchBarDelegate {
 //MARK: - TableViewDelegate
 extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailedController = ModuleBuilder.createDetailedStockModule(withSymbol: searchBar.companies[indexPath.row].symbol ?? "AAPL")
-        navigationController?.pushViewController(detailedController, animated: true)
+        if tableView === searchBar.searchTableView {
+            let detailedController = (UIApplication.shared.delegate as! AppDelegate).router.createDetailedStockModule(withSymbol: searchBar.companies[indexPath.row].symbol ?? "AAPL")
+            navigationController?.pushViewController(detailedController, animated: true)
+        } else if tableView === bookmarkedStocksTableView {
+            let detailedController = (UIApplication.shared.delegate as! AppDelegate).router.createDetailedStockModule(withSymbol: bookmarks[indexPath.row].symbol ?? "AAPL")
+            navigationController?.pushViewController(detailedController, animated: true)
+        }
     }
 }
 
 //MARK: - TableViewDataSource
 extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchBar.companies.count
+        if tableView === searchBar.searchTableView {
+            return searchBar.companies.count
+        } else if tableView === bookmarkedStocksTableView {
+            return bookmarks.count
+        } else {
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
-        cell?.textLabel?.text = searchBar.companies[indexPath.row].name
-        
-        return cell!
+        if tableView === searchBar.searchTableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
+            cell?.textLabel?.text = searchBar.companies[indexPath.row].name
+            return cell!
+        } else if tableView === bookmarkedStocksTableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "bookMarkCell")
+            cell?.textLabel?.text = bookmarks[indexPath.row].name
+            return cell!
+        } else {
+            return tableView.dequeueReusableCell(withIdentifier: "cell")!
+        }
     }
 }

@@ -12,13 +12,14 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var router: ModuleBuilder!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
         let tabBarController = UITabBarController()
+        router = ModuleBuilder()
         
-        let mainController = ModuleBuilder.createMainModule()
-        let stocksController = ModuleBuilder.createMainModule()
+        let mainController = router.createMainModule()
+        let stocksController = router.createMainModule()
         
         tabBarController.viewControllers = [mainController, stocksController]
         
