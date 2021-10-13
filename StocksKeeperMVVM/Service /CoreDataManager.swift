@@ -43,6 +43,11 @@ class CoreDataManager {
         }
     }
     
+    func delete<T: NSManagedObject>(object: T) {
+        viewContext.delete(object)
+        save()
+    }
+    
     init() {
         persistentContainer = NSPersistentContainer(name: "StocksKeeperMVVM")
         persistentContainer.loadPersistentStores { description, error in

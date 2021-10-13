@@ -41,7 +41,7 @@ class NetworkService: NetworkServiceProtocol {
         let urlString = "https://www.alphavantage.co/query?function=OVERVIEW&symbol=\(symbol)&apikey=6O8FZ2GBGJR485JE"
         guard let url = URL(string: urlString) else { return }
         
-        URLSession.shared.dataTask(with: url) { data, _, error in
+        URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
             if let error = error {
                 completion(.failure(error))
                 return
@@ -49,13 +49,25 @@ class NetworkService: NetworkServiceProtocol {
             
             do {
                 if let data = data {
-                    let company = try JSONDecoder().decode(DetailedViewData.CompanyOverview.self, from: data)
-                    completion(.success(company))
+                    let companyJson = try JSONSerialization.jsonObject(with: data, options: []) as? [String: String]
+                    let data = self?.parseCompanyOverviewJson(data: companyJson ?? [:])
+                    completion(.success(data))
                 }
             } catch {
                 completion(.failure(error))
             }
         }.resume()
+    }
+    
+    func parseCompanyOverviewJson(data: [String: String]) -> DetailedViewData.CompanyOverview {
+        let company = DetailedViewData.CompanyOverview(name: data["Name"] ?? nil,
+                                                       symbol: data["Symbol"] ?? nil,
+                                                       description: data["Description"] ?? nil,
+                                                       day: data["50DayMovingAverage"] ?? nil,
+                                                       dayBefore: data["200DayMovingAverage"] ?? nil,
+                                                       bookmarked: nil)
+        
+        return company
     }
     
 }

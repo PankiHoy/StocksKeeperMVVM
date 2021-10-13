@@ -21,8 +21,7 @@ class DinamicTableView: UITableView {
     }
     
     func setup() {
-        layer.cornerRadius = 15
-        layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        
     }
     
     override func reloadData() {

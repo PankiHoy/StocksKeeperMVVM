@@ -11,6 +11,8 @@ extension BookmarkedStocksTableView {
 
     static func makeTableView() -> UITableView {
         let tableView = DinamicTableView()
+        tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
         
         return tableView
     }

@@ -19,11 +19,6 @@ extension SearchBar {
         addSubview(activityIndicator)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            activityIndicator.centerYAnchor.constraint(equalToSystemSpacingBelow: centerYAnchor, multiplier: 1),
-            activityIndicator.trailingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: 1)
-        ])
-        
         return activityIndicator
     }
     
@@ -31,6 +26,8 @@ extension SearchBar {
         let tableView = DinamicTableView()
         tableView.layer.borderWidth = 0.1
         tableView.layer.borderColor = UIColor.black.cgColor
+        tableView.layer.cornerRadius = 15
+        tableView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         
         return tableView
     }

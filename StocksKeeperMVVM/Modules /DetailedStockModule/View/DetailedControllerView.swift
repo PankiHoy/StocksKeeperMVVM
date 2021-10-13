@@ -43,7 +43,7 @@ class DetailedControllerView: UIView {
     }
     
     func update(viewData: DetailedViewData.CompanyOverview?, isHidden: Bool) {
-        stackView = makeStackView(name: viewData?.name, symbol: viewData?.symbol, description: viewData?.description, day: viewData?.day, dayBefore: viewData?.dayBefore, bookmarked: true)
+        stackView = makeStackView(name: viewData?.name, symbol: viewData?.symbol, description: viewData?.description, day: viewData?.day, dayBefore: viewData?.dayBefore, bookmarked: false)
         company = viewData
     }
     

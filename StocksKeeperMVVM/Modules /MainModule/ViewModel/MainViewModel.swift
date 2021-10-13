@@ -13,6 +13,7 @@ protocol MainViewModelProtocol {
     func startFetch(withSymbol: String)
     func add<T: NSManagedObject>(type: T.Type) -> T?
     func save()
+    func delete<T: NSManagedObject>(object: T)
     func fetchBookmarks() -> [Stock]?
 }
 
@@ -47,11 +48,12 @@ final class MainViewModel: MainViewModelProtocol {
         coreDataManager?.save()
     }
     
+    func delete<T: NSManagedObject>(object: T) {
+        coreDataManager?.delete(object: object)
+    }
+    
     func fetchBookmarks() -> [Stock]? {
         let bookmarks = coreDataManager?.fetch(Stock.self)
-        bookmarks?.forEach({ stock in
-            print(stock.dayBefore)
-        })
         return bookmarks
     }
     

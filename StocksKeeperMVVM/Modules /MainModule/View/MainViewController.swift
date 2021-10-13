@@ -19,6 +19,7 @@ class MainViewController: UIViewController {
         super.viewWillAppear(animated)
         bookmarks = viewModel.fetchBookmarks()
         configureSearchBar()
+        bookmarkedStocksTableView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -47,10 +48,15 @@ class MainViewController: UIViewController {
         searchBar.showsCancelButton = false
         searchBar.text = ""
         searchBar.delegate = self
+        searchBar.sizeToFit()
         navigationItem.rightBarButtonItem = (UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"),
                                                              style: .plain,
                                                              target: self,
                                                              action: #selector(searchButtonTapped(sender:))))
+        navigationItem.setLeftBarButton(UIBarButtonItem(image: UIImage(systemName: "pencil"),
+                                                        style: .plain,
+                                                        target: self,
+                                                        action: #selector(editBookmarks(sender:))), animated: true)
     }
     
     func configureBookmarksTableView() {
@@ -106,6 +112,19 @@ class MainViewController: UIViewController {
         searchBar.showsCancelButton = true
         searchBar.becomeFirstResponder()
         navigationItem.rightBarButtonItem = nil
+        navigationItem.leftBarButtonItem = nil
+    }
+    
+    @objc func editBookmarks(sender: UIBarButtonItem) {
+        bookmarkedStocksTableView.isEditing = true
+        navigationItem.leftBarButtonItem = nil
+        navigationItem.setLeftBarButton(UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneEditing(sender:))), animated: true)
+    }
+    
+    @objc func doneEditing(sender: UIBarButtonItem) {
+        bookmarkedStocksTableView.isEditing = false
+        navigationItem.leftBarButtonItem = nil
+        navigationItem.setLeftBarButton(UIBarButtonItem(image: UIImage(systemName: "pencil"), style: .plain, target: self, action: #selector(editBookmarks(sender:))), animated: true)
     }
     
     func fetchBookMarks() {
@@ -129,6 +148,17 @@ extension MainViewController: UISearchBarDelegate {
 
 //MARK: - TableViewDelegate
 extension MainViewController: UITableViewDelegate {
+    //MARK: - Deleting Stock from Bookmarks
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let stockToRemove = bookmarks[indexPath.row]
+            viewModel.delete(object: stockToRemove) //delete row
+            bookmarks = viewModel.fetchBookmarks() //refetch data
+            tableView.reloadData() //reload data
+        }
+    }
+    
+    //MARK: - Selecting stock
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView === searchBar.searchTableView {
             let detailedController = (UIApplication.shared.delegate as! AppDelegate).router.createDetailedStockModule(withSymbol: searchBar.companies[indexPath.row].symbol ?? "AAPL")

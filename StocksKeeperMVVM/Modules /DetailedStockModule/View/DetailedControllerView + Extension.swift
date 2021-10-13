@@ -89,14 +89,22 @@ extension DetailedControllerView {
         bookMarkLabel.setImage(UIImage(systemName: "bookmark"), for: .normal)
         bookMarkLabel.setImage(UIImage(systemName: "bookmark.fill"), for: .selected)
         
+        bookMarkLabel.isSelected = bookmarked ?? false
+        
         bookMarkLabel.addTarget(self, action: #selector(addBookMark(sender:)), for: .touchUpInside)
         bookMarkLabel.isSelected = false
         
         horizontalStack.addArrangedSubview(symbolLabel)
         horizontalStack.addArrangedSubview(bookMarkLabel)
         
+        symbolLabel.translatesAutoresizingMaskIntoConstraints = false
+        bookMarkLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        symbolLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/2).isActive = true
+        bookMarkLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/2).isActive = true
+        
         let descriptionLabel = UILabel()
-        descriptionLabel.text = description ?? "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum ante nisl, vitae gravida urna ultrices in. Nullam id nulla quis dui pellentesque euismod. Vivamus id dolor quam. Aenean pulvinar turpis aliquam facilisis feugiat. Phasellus vehicula dui nec magna tristique, ac fermentum dui pharetra. Vivamus ullamcorper tincidunt ligula, ac commodo diam posuere quis. Morbi in massa ligula. Pellentesque congue, ipsum et interdum dapibus, risus risus pharetra ipsum, at euismod neque leo et nisi. Praesent auctor, magna non commodo dictum, velit turpis mattis lacus, in fringilla lacus augue non magna."
+        descriptionLabel.text = description ?? ""
         descriptionLabel.font = UIFont.robotoItalic(withSize: 25)
         descriptionLabel.numberOfLines = 0
         
@@ -104,6 +112,12 @@ extension DetailedControllerView {
         stackView.addArrangedSubview(horizontalStack)
         stackView.addArrangedSubview(configureStocksValues(day: day, dayBefore: dayBefore))
         stackView.addArrangedSubview(descriptionLabel)
+        
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        nameLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: stackView.topAnchor, constant: 50).isActive = true
         
         return stackView
     }
@@ -160,7 +174,6 @@ extension DetailedControllerView {
             saveStock()
         } else {
             sender.isSelected = false
-            dump("already added")
         }
     }
     

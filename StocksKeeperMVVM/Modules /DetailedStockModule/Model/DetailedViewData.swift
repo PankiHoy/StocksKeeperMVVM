@@ -19,6 +19,7 @@ enum DetailedViewData {
         let description: String?
         let day: String?
         let dayBefore: String?
+        let bookmarked: Bool?
         
         enum CodingKeys: String, CodingKey {
             case name
@@ -26,6 +27,7 @@ enum DetailedViewData {
             case description
             case day = "AnalustTargetPrice"
             case dayBefore = "50DayMovingAverage"
+            case bookmarked
         }
     }
 }
