@@ -11,6 +11,10 @@ import CoreData
 protocol DetailedStockViewModelProtocol {
     var updateViewData: ((DetailedViewData)->())? {get set }
     func startFetch()
+    func add<T: NSManagedObject>(type: T.Type) -> T?
+    func save()
+    func delete<T: NSManagedObject>(object: T)
+    func fetch<T: NSManagedObject>(type: T.Type) -> [T]?
 }
 
 final class DetailedStockViewModel: DetailedStockViewModelProtocol {
@@ -28,22 +32,25 @@ final class DetailedStockViewModel: DetailedStockViewModelProtocol {
     
     public func startFetch() {
         updateViewData?(.loading(DetailedViewData.CompanyOverview(name: nil, symbol: nil, description: nil, day: nil, dayBefore: nil, bookmarked: nil)))
+        
         if (coreDataManager?.fetch(Stock.self)?.contains(where: { stock in //if database already contains element by this key, then get it from db
             stock.symbol == symbol
         })) == true {
             let fetchRequest = NSFetchRequest<Stock>(entityName: "Stock")
             fetchRequest.predicate = NSPredicate(format: "symbol == %@", symbol)
-            do {
-                let dataBaseStock = try coreDataManager?.viewContext.fetch(fetchRequest)
-                let stock = DetailedViewData.CompanyOverview(name: dataBaseStock?.first?.name,
-                                                             symbol: dataBaseStock?.first?.symbol,
-                                                             description: dataBaseStock?.first?.description,
-                                                             day: dataBaseStock?.first?.day,
-                                                             dayBefore: dataBaseStock?.first?.dayBefore,
-                                                             bookmarked: dataBaseStock?.first?.bookmarked)
-                self.updateViewData?(.success(stock))
-            } catch {
-                dump(error)
+            DispatchQueue.global().async { [weak self] in
+                do {
+                    let dataBaseStock = try self?.coreDataManager?.viewContext.fetch(fetchRequest)
+                    let stock = DetailedViewData.CompanyOverview(name: dataBaseStock?.first?.name,
+                                                                 symbol: dataBaseStock?.first?.symbol,
+                                                                 description: dataBaseStock?.first?.desctiption,
+                                                                 day: dataBaseStock?.first?.day,
+                                                                 dayBefore: dataBaseStock?.first?.dayBefore,
+                                                                 bookmarked: dataBaseStock?.first?.bookmarked)
+                    self?.updateViewData?(.success(stock))
+                } catch {
+                    dump(error)
+                }
             }
         } else {
             networkService?.getCompanyOverview(bySymbol: symbol, completion: { [weak self] result in
@@ -55,7 +62,7 @@ final class DetailedStockViewModel: DetailedStockViewModelProtocol {
                                                                                    description: company?.description,
                                                                                    day: company?.day,
                                                                                    dayBefore: company?.dayBefore,
-                                                                                   bookmarked: nil)))
+                                                                                   bookmarked: false)))
                 case .failure(let error):
                     dump(error)
                 }
@@ -71,8 +78,15 @@ final class DetailedStockViewModel: DetailedStockViewModelProtocol {
         coreDataManager?.save()
     }
     
-    func fetchBookmarks() -> [Stock] {
-        let bookmarks = coreDataManager?.fetch(Stock.self)
-        return bookmarks ?? []
+    func delete<T: NSManagedObject>(object: T) {
+        coreDataManager?.delete(object: object)
+    }
+    
+    func delete(symbol: String?) {
+        coreDataManager?.delete(symbol: symbol)
+    }
+    
+    func fetch<T>(type: T.Type) -> [T]? where T : NSManagedObject {
+        return coreDataManager?.fetch(type)
     }
 }

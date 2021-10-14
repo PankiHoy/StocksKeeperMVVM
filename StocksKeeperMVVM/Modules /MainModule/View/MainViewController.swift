@@ -17,9 +17,10 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        bookmarks = viewModel.fetchBookmarks()
+        fetchBookMarks()
         configureSearchBar()
-        bookmarkedStocksTableView.reloadData()
+        configureBookmarksTableView()
+        configureBookmarsLabel(show: bookmarks.isEmpty)
     }
     
     override func viewDidLoad() {
@@ -30,11 +31,10 @@ class MainViewController: UIViewController {
     func setup() {
         view.backgroundColor = .white
         configureTabBar()
-        configureSearchBar()
-        configureBookmarksTableView()
     }
     
     func configureTabBar() {
+        tabBarController?.tabBar.isHidden = false
         tabBarItem = UITabBarItem(title: "Favorites",
                                   image: UIImage(systemName: "star"),
                                   selectedImage: UIImage(systemName: "star.fill"))
@@ -57,12 +57,41 @@ class MainViewController: UIViewController {
                                                         style: .plain,
                                                         target: self,
                                                         action: #selector(editBookmarks(sender:))), animated: true)
+        
+        if bookmarks.isEmpty {
+            navigationItem.leftBarButtonItem?.isEnabled = false
+        } else {
+            navigationItem.leftBarButtonItem?.isEnabled = true
+        }
+    }
+    
+    func configureBookmarsLabel(show: Bool) {
+        let bookmaksLabel = UILabel()
+        if show {
+            bookmaksLabel.font = UIFont.robotoItalic(withSize: 24)
+            bookmaksLabel.text = "You will see your bookmarks here"
+            bookmaksLabel.numberOfLines = 0
+            bookmaksLabel.alpha = 0.5
+            
+            view.addSubview(bookmaksLabel)
+            bookmaksLabel.translatesAutoresizingMaskIntoConstraints = false
+            
+            NSLayoutConstraint.activate([
+                bookmaksLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                bookmaksLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            ])
+        } else {
+            if view.subviews.contains(bookmaksLabel) {
+                bookmaksLabel.removeFromSuperview()
+            }
+        }
     }
     
     func configureBookmarksTableView() {
         bookmarkedStocksTableView.register(UITableViewCell.self, forCellReuseIdentifier: "bookMarkCell")
         bookmarkedStocksTableView.delegate = self
         bookmarkedStocksTableView.dataSource = self
+        bookmarkedStocksTableView.isEditing = false
         
         view.addSubview(bookmarkedStocksTableView)
         bookmarkedStocksTableView.translatesAutoresizingMaskIntoConstraints = false
@@ -121,7 +150,7 @@ class MainViewController: UIViewController {
         navigationItem.setLeftBarButton(UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneEditing(sender:))), animated: true)
     }
     
-    @objc func doneEditing(sender: UIBarButtonItem) {
+    @objc func doneEditing(sender: UIBarButtonItem?) {
         bookmarkedStocksTableView.isEditing = false
         navigationItem.leftBarButtonItem = nil
         navigationItem.setLeftBarButton(UIBarButtonItem(image: UIImage(systemName: "pencil"), style: .plain, target: self, action: #selector(editBookmarks(sender:))), animated: true)
@@ -129,6 +158,7 @@ class MainViewController: UIViewController {
     
     func fetchBookMarks() {
         bookmarks = viewModel.fetchBookmarks()
+        bookmarkedStocksTableView.reloadData()
     }
 }
 
@@ -155,6 +185,12 @@ extension MainViewController: UITableViewDelegate {
             viewModel.delete(object: stockToRemove) //delete row
             bookmarks = viewModel.fetchBookmarks() //refetch data
             tableView.reloadData() //reload data
+            
+            if tableView.numberOfRows(inSection: 0) == 0 {
+                configureBookmarsLabel(show: true)
+                doneEditing(sender: nil)
+                navigationItem.leftBarButtonItem?.isEnabled = false
+            }
         }
     }
     
@@ -190,9 +226,15 @@ extension MainViewController: UITableViewDataSource {
         } else if tableView === bookmarkedStocksTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: "bookMarkCell")
             cell?.textLabel?.text = bookmarks[indexPath.row].name
+            cell?.detailTextLabel?.text = bookmarks[indexPath.row].day
+            cell?.detailTextLabel?.textColor = .black
             return cell!
         } else {
             return tableView.dequeueReusableCell(withIdentifier: "cell")!
         }
     }
+}
+
+extension UIViewController {
+    
 }

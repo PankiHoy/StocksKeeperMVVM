@@ -6,32 +6,39 @@
 //
 
 import Foundation
+import CoreData
 
-protocol StocksBagViewModelProtocol {
+protocol StocksbagViewModelPrototocol {
     var updateViewData: ((ViewData)->())? {get set }
-    func startFetch(withSymbol: String)
+//    func fetchBag() -> [StocksBag]?
+    func add<T: NSManagedObject>(type: T.Type) -> T?
+    func save()
+    func delete<T: NSManagedObject>(object: T)
 }
 
-final class StocksBagViewModel: StocksBagViewModelProtocol {
+final class StocksBagViewModel: StocksbagViewModelPrototocol {
     public var updateViewData: ((ViewData) -> ())?
     private var networkService: NetworkServiceProtocol?
+    private let coreDataManager: CoreDataManager?
     
-    init(_ networkService: NetworkServiceProtocol) {
+    init(_ networkService: NetworkServiceProtocol, _ coreDataManager: CoreDataManager) {
         self.networkService = networkService
+        self.coreDataManager = coreDataManager
     }
     
-    public func startFetch(withSymbol symbol: String) {
-        updateViewData?(.loading(ViewData.CompaniesData(companiesList: nil)))
-        networkService?.getCompaniesList(bySymbol: symbol, completion: { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let companiesList):
-                self.updateViewData?(.success(ViewData.CompaniesData(companiesList: companiesList)))
-            case .failure(let error):
-                dump(error)
-            }
-        })
+//    func fetchBag() -> [StocksBag]? {
+//        return coreDataManager?.fetch(StocksBag.self)
+//    }
+    
+    func add<T: NSManagedObject>(type: T.Type) -> T? {
+        return coreDataManager?.add(type)
     }
     
+    func save() {
+        coreDataManager?.save()
+    }
     
+    func delete<T: NSManagedObject>(object: T) {
+        coreDataManager?.delete(object: object)
+    }
 }

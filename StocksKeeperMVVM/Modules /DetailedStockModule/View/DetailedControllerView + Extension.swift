@@ -86,20 +86,20 @@ extension DetailedControllerView {
         symbolLabel.textColor = .gray
         
         let bookMarkLabel = UIButton()
+        bookMarkLabel.tintColor = .red
         bookMarkLabel.setImage(UIImage(systemName: "bookmark"), for: .normal)
         bookMarkLabel.setImage(UIImage(systemName: "bookmark.fill"), for: .selected)
         
         bookMarkLabel.isSelected = bookmarked ?? false
         
         bookMarkLabel.addTarget(self, action: #selector(addBookMark(sender:)), for: .touchUpInside)
-        bookMarkLabel.isSelected = false
         
         horizontalStack.addArrangedSubview(symbolLabel)
         horizontalStack.addArrangedSubview(bookMarkLabel)
         
         symbolLabel.translatesAutoresizingMaskIntoConstraints = false
         bookMarkLabel.translatesAutoresizingMaskIntoConstraints = false
-        
+
         symbolLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/2).isActive = true
         bookMarkLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/2).isActive = true
         
@@ -142,16 +142,40 @@ extension DetailedControllerView {
         dayBeforeLabel.textColor = .gray
         dayBeforeLabel.textAlignment = .center
         
+        let arrowUpLabel = UIImageView(image: UIImage(systemName: "arrowtriangle.up.fill"))
+        arrowUpLabel.tintColor = .green
+        
+        let arrowDownLabel = UIImageView(image: UIImage(systemName: "arrowtriangle.down.fill"))
+        arrowDownLabel.tintColor = .red
+        
+        if let day = day, let dayBefore = dayBefore {
+            if Float(day)! > Float(dayBefore)! {
+                arrowDownLabel.tintColor = .gray
+            } else {
+                arrowUpLabel.tintColor = .gray
+            }
+        }
+        
+        let arrowStack = UIStackView()
+        arrowStack.axis = .vertical
+        arrowStack.spacing = 5
+        
+        arrowStack.addArrangedSubview(arrowUpLabel)
+        arrowStack.addArrangedSubview(arrowDownLabel)
+        
+        arrowUpLabel.translatesAutoresizingMaskIntoConstraints = false
+        arrowDownLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            arrowUpLabel.heightAnchor.constraint(equalTo: arrowStack.heightAnchor, multiplier: 0.5),
+            arrowDownLabel.heightAnchor.constraint(equalTo: arrowStack.heightAnchor, multiplier: 0.5)
+        ])
+        
         stack.addArrangedSubview(dayValueLabel)
         stack.addArrangedSubview(dayBeforeLabel)
         
         dayBeforeLabel.translatesAutoresizingMaskIntoConstraints = false
         dayValueLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            dayBeforeLabel.leadingAnchor.constraint(equalTo: stack.leadingAnchor, constant: UIScreen.main.bounds.width/4),
-            dayValueLabel.leadingAnchor.constraint(equalTo: stack.leadingAnchor, constant: UIScreen.main.bounds.width/4),
-        ])
         
         let randomLabel = UIButton()
         randomLabel.setTitle("BUY", for: .normal)
@@ -163,6 +187,7 @@ extension DetailedControllerView {
         randomLabel.addTarget(self, action: #selector(buyStock(sender:amount:)), for: .touchUpInside)
         
         horizontalStack.addArrangedSubview(stack)
+        horizontalStack.addArrangedSubview(arrowStack)
         horizontalStack.addArrangedSubview(randomLabel)
         
         return horizontalStack
@@ -174,23 +199,42 @@ extension DetailedControllerView {
             saveStock()
         } else {
             sender.isSelected = false
+            sender.setNeedsLayout()
+            sender.layoutIfNeeded()
+            deleteStock()
         }
     }
     
+    func deleteStock() {
+        delegate.viewModel?.delete(symbol: company.symbol)
+    }
+    
     func saveStock() {
-        guard let user = self.delegate.viewModel?.add(type: Stock.self) else { return }
+        guard let stock = self.delegate.viewModel?.add(type: Stock.self) else { return }
         guard let company = company else { return }
-        user.name = company.name
-        user.desctiption = company.description
-        user.symbol = company.symbol
-        user.day = company.day
-        user.dayBefore = company.dayBefore
-        user.bookmarked = true
+        stock.name = company.name
+        stock.desctiption = company.description
+        stock.symbol = company.symbol
+        stock.day = company.day
+        stock.dayBefore = company.dayBefore
+        stock.bookmarked = true
         delegate.viewModel?.save()
     }
     
     @objc func buyStock(sender: UITapGestureRecognizer, amount: Int) {
-        dump("buy \(amount) stocks")
+//        if delegate.viewModel?.fetch(type: StocksBag.self)?.count == 0 {
+//            guard let bag = delegate.viewModel?.fetch(type: StocksBag.self)?.first else { return }
+//            guard let stock = self.delegate.viewModel?.add(type: Stock.self) else { return }
+//            guard let company = company else { return }
+//            stock.name = company.name
+//            stock.desctiption = company.description
+//            stock.symbol = company.symbol
+//            stock.day = company.day
+//            stock.dayBefore = company.dayBefore
+//            stock.bookmarked = company.bookmarked ?? false
+//            bag.addToStocks(stock)
+//            delegate.viewModel?.save()
+//        }
     }
     
 }

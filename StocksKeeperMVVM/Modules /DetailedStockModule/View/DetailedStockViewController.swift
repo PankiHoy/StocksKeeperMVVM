@@ -20,9 +20,10 @@ class DetailedStockViewController: UIViewController {
         super.loadView()
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         view.backgroundColor = .white
+        self.tabBarController?.tabBar.isHidden = true
 
         view.addSubview(testView)
         testView.frame = view.bounds
@@ -30,6 +31,11 @@ class DetailedStockViewController: UIViewController {
         
         start()
         updateViews()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     private func updateViews() {

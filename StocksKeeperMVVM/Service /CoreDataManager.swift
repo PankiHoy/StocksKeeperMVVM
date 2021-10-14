@@ -15,7 +15,7 @@ class CoreDataManager {
     var viewContext: NSManagedObjectContext {
         return persistentContainer.viewContext
     }
-
+    
     func add <T: NSManagedObject>(_ type: T.Type) -> T? {
         guard let entityName = T.entity().name else { return nil }
         guard let entity = NSEntityDescription.entity(forEntityName: entityName, in: viewContext) else { return nil }
@@ -46,6 +46,18 @@ class CoreDataManager {
     func delete<T: NSManagedObject>(object: T) {
         viewContext.delete(object)
         save()
+    }
+    
+    func delete(symbol: String?) {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Stock")
+        request.predicate = NSPredicate(format: "symbol == %@", symbol ?? "")
+        do {
+            let stockToRemove = try viewContext.fetch(request)
+            viewContext.delete(stockToRemove.first as! NSManagedObject)
+            try viewContext.save()
+        } catch {
+            print("stock can not be removed 'cause \(error.localizedDescription)")
+        }
     }
     
     init() {

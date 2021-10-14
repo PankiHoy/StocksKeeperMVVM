@@ -32,7 +32,7 @@ class DetailedControllerView: UIView {
             activityIndicator.startAnimating()
         case .loading(let loading):
             update(viewData: loading, isHidden: false)
-            activityIndicator.startAnimating()
+            activityIndicator.stopAnimating()
         case .success(let success):
             update(viewData: success, isHidden: false)
             activityIndicator.stopAnimating()
@@ -43,7 +43,8 @@ class DetailedControllerView: UIView {
     }
     
     func update(viewData: DetailedViewData.CompanyOverview?, isHidden: Bool) {
-        stackView = makeStackView(name: viewData?.name, symbol: viewData?.symbol, description: viewData?.description, day: viewData?.day, dayBefore: viewData?.dayBefore, bookmarked: false)
+        stackView = nil
+        stackView = makeStackView(name: viewData?.name, symbol: viewData?.symbol, description: viewData?.description, day: viewData?.day, dayBefore: viewData?.dayBefore, bookmarked: viewData?.bookmarked)
         company = viewData
     }
     

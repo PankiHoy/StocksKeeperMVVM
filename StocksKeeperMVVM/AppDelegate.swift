@@ -18,15 +18,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let tabBarController = UITabBarController()
         router = ModuleBuilder()
         
-        let mainController = router.createMainModule()
-        let stocksController = router.createMainModule()
+        let mainController = UINavigationController(rootViewController: router.createMainModule())
+        let stocksBagController = UINavigationController(rootViewController: router.createStocksBagModule())
         
-        tabBarController.viewControllers = [mainController, stocksController]
-        
-        let navigationController = UINavigationController(rootViewController: mainController)
+        tabBarController.viewControllers = [mainController, stocksBagController]
         
         window = UIWindow()
-        window?.rootViewController = navigationController
+        window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
         
         return true

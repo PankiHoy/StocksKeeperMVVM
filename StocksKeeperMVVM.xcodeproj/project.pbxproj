@@ -10,7 +10,6 @@
 		D74C3CBD27134DEF00FE7B66 /* DetailedControllerView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74C3CBC27134DEF00FE7B66 /* DetailedControllerView + Extension.swift */; };
 		D74C3CBF2713545D00FE7B66 /* UIFont + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74C3CBE2713545D00FE7B66 /* UIFont + Extension.swift */; };
 		D7749515271045050003F14B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7749514271045050003F14B /* AppDelegate.swift */; };
-		D774951F271045050003F14B /* StocksKeeperMVVM.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D774951D271045050003F14B /* StocksKeeperMVVM.xcdatamodeld */; };
 		D7749521271045080003F14B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7749520271045080003F14B /* Assets.xcassets */; };
 		D7749524271045080003F14B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7749522271045080003F14B /* LaunchScreen.storyboard */; };
 		D774953327105AFC0003F14B /* CompaniesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D774953227105AFB0003F14B /* CompaniesData.swift */; };
@@ -29,8 +28,8 @@
 		D7B21B552715B41F0001C146 /* BookmarkedStocksTableView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B21B542715B41F0001C146 /* BookmarkedStocksTableView + Extension.swift */; };
 		D7B21B572715B6570001C146 /* BookmarkedStocksTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B21B562715B6570001C146 /* BookmarkedStocksTableView.swift */; };
 		D7B21B5A2715B9B10001C146 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B21B592715B9B10001C146 /* CoreDataManager.swift */; };
-		D7B21B652715E1520001C146 /* Stock+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B21B632715E1520001C146 /* Stock+CoreDataClass.swift */; };
-		D7B21B662715E1520001C146 /* Stock+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B21B642715E1520001C146 /* Stock+CoreDataProperties.swift */; };
+		D7BF0726271858E200B0C2FF /* StocksBagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7BF0725271858E200B0C2FF /* StocksBagViewController.swift */; };
+		D7BF074B271876EC00B0C2FF /* StocksKeeperMVVM.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D7BF0749271876EC00B0C2FF /* StocksKeeperMVVM.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,7 +37,6 @@
 		D74C3CBE2713545D00FE7B66 /* UIFont + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont + Extension.swift"; sourceTree = "<group>"; };
 		D7749511271045050003F14B /* StocksKeeperMVVM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StocksKeeperMVVM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7749514271045050003F14B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D774951E271045050003F14B /* StocksKeeperMVVM.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StocksKeeperMVVM.xcdatamodel; sourceTree = "<group>"; };
 		D7749520271045080003F14B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D7749523271045080003F14B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D7749525271045080003F14B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -58,8 +56,8 @@
 		D7B21B542715B41F0001C146 /* BookmarkedStocksTableView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookmarkedStocksTableView + Extension.swift"; sourceTree = "<group>"; };
 		D7B21B562715B6570001C146 /* BookmarkedStocksTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkedStocksTableView.swift; sourceTree = "<group>"; };
 		D7B21B592715B9B10001C146 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		D7B21B632715E1520001C146 /* Stock+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stock+CoreDataClass.swift"; sourceTree = "<group>"; };
-		D7B21B642715E1520001C146 /* Stock+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stock+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D7BF0725271858E200B0C2FF /* StocksBagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksBagViewController.swift; sourceTree = "<group>"; };
+		D7BF074A271876EC00B0C2FF /* StocksKeeperMVVM.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StocksKeeperMVVM.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,7 +98,7 @@
 				D7749520271045080003F14B /* Assets.xcassets */,
 				D7749522271045080003F14B /* LaunchScreen.storyboard */,
 				D7749525271045080003F14B /* Info.plist */,
-				D774951D271045050003F14B /* StocksKeeperMVVM.xcdatamodeld */,
+				D7BF0749271876EC00B0C2FF /* StocksKeeperMVVM.xcdatamodeld */,
 			);
 			path = StocksKeeperMVVM;
 			sourceTree = "<group>";
@@ -168,8 +166,6 @@
 		D774953127105AE90003F14B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				D7B21B632715E1520001C146 /* Stock+CoreDataClass.swift */,
-				D7B21B642715E1520001C146 /* Stock+CoreDataProperties.swift */,
 				D774953227105AFB0003F14B /* CompaniesData.swift */,
 			);
 			path = Model;
@@ -238,6 +234,7 @@
 		D7B21B4F2715B3670001C146 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D7BF0725271858E200B0C2FF /* StocksBagViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -319,18 +316,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				D74C3CBF2713545D00FE7B66 /* UIFont + Extension.swift in Sources */,
-				D7B21B652715E1520001C146 /* Stock+CoreDataClass.swift in Sources */,
 				D7B21B552715B41F0001C146 /* BookmarkedStocksTableView + Extension.swift in Sources */,
 				D7749515271045050003F14B /* AppDelegate.swift in Sources */,
 				D77495502710896E0003F14B /* DetailedControllerView.swift in Sources */,
 				D774953C271061670003F14B /* SearchBar.swift in Sources */,
-				D7B21B662715E1520001C146 /* Stock+CoreDataProperties.swift in Sources */,
 				D7B21B522715B3950001C146 /* StocksBagViewModel.swift in Sources */,
 				D7749541271061DB0003F14B /* DinamicTableView.swift in Sources */,
 				D774954C27107FEB0003F14B /* DetailedViewData.swift in Sources */,
 				D774954427106DDD0003F14B /* ModuleBuilder.swift in Sources */,
 				D774953A27105C3C0003F14B /* NetworkService .swift in Sources */,
-				D774951F271045050003F14B /* StocksKeeperMVVM.xcdatamodeld in Sources */,
+				D7BF0726271858E200B0C2FF /* StocksBagViewController.swift in Sources */,
 				D774954A27107DBE0003F14B /* DetailedStockViewModel.swift in Sources */,
 				D7B21B572715B6570001C146 /* BookmarkedStocksTableView.swift in Sources */,
 				D774953327105AFC0003F14B /* CompaniesData.swift in Sources */,
@@ -340,6 +335,7 @@
 				D774953727105BA70003F14B /* MainViewModel.swift in Sources */,
 				D7B21B5A2715B9B10001C146 /* CoreDataManager.swift in Sources */,
 				D774953E271061760003F14B /* SearchBar + Extension .swift in Sources */,
+				D7BF074B271876EC00B0C2FF /* StocksKeeperMVVM.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -535,12 +531,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		D774951D271045050003F14B /* StocksKeeperMVVM.xcdatamodeld */ = {
+		D7BF0749271876EC00B0C2FF /* StocksKeeperMVVM.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				D774951E271045050003F14B /* StocksKeeperMVVM.xcdatamodel */,
+				D7BF074A271876EC00B0C2FF /* StocksKeeperMVVM.xcdatamodel */,
 			);
-			currentVersion = D774951E271045050003F14B /* StocksKeeperMVVM.xcdatamodel */;
+			currentVersion = D7BF074A271876EC00B0C2FF /* StocksKeeperMVVM.xcdatamodel */;
 			path = StocksKeeperMVVM.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
