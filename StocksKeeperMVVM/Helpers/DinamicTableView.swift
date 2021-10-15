@@ -9,7 +9,7 @@ import UIKit
 
 class DinamicTableView: UITableView {
 
-    private let maxHeight = UIScreen.main.bounds.height/2
+    private let maxHeight = UIScreen.main.bounds.height/2 - 100
     
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
@@ -21,7 +21,7 @@ class DinamicTableView: UITableView {
     }
     
     func setup() {
-        
+        backgroundColor = .lightLightGray
     }
     
     override func reloadData() {
@@ -33,7 +33,7 @@ class DinamicTableView: UITableView {
     override public var intrinsicContentSize: CGSize {
         setNeedsLayout()
         
-        let height = max(contentSize.height, 0) //MARK: СДЕЛАТЬ ПО НОРМАЛЬНОМУ ДЛЯ КЕЙСА ЕСЛИ ХОЧУ ОГРАНИЧИТЬ РАЗМЕР TableView
+        let height = min(contentSize.height, maxHeight) //MARK: СДЕЛАТЬ ПО НОРМАЛЬНОМУ ДЛЯ КЕЙСА ЕСЛИ ХОЧУ ОГРАНИЧИТЬ РАЗМЕР TableView
         
         return CGSize(width: contentSize.width, height: height)
     }

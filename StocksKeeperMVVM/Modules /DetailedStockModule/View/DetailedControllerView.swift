@@ -37,7 +37,8 @@ class DetailedControllerView: UIView {
             update(viewData: success, isHidden: false)
             activityIndicator.stopAnimating()
         case .failure(let failure):
-            update(viewData: failure, isHidden: false)
+            let alertController = UIAlertController(title: "Requesting too soon", message: "Note: Thank you for using Alpha Vantage! Our standard API call frequency is 5 calls per minute and 500 calls per day. Please visit https://www.alphavantage.co/premium/ if you would like to target a higher API call frequency.", preferredStyle: .alert)
+            addSubview(alertController.view)
             activityIndicator.stopAnimating()
         }
     }

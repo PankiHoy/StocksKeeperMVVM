@@ -8,7 +8,21 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="symbol" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="StocksBag" representedClassName="StocksBag" syncable="YES">
+        <attribute name="profit" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="stocks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StockToBuy"/>
+    </entity>
+    <entity name="StockToBuy" representedClassName=".StockToBuy" syncable="YES">
+        <attribute name="amount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="cost" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="day" optional="YES" attributeType="String"/>
+        <attribute name="dayBefore" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="symbol" optional="YES" attributeType="String"/>
+    </entity>
     <elements>
         <element name="Stock" positionX="-63" positionY="-18" width="128" height="133"/>
+        <element name="StocksBag" positionX="-63" positionY="36" width="128" height="59"/>
+        <element name="StockToBuy" positionX="-54" positionY="36" width="128" height="119"/>
     </elements>
 </model>

@@ -97,9 +97,9 @@ class MainViewController: UIViewController {
         bookmarkedStocksTableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            bookmarkedStocksTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            bookmarkedStocksTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            bookmarkedStocksTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            bookmarkedStocksTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            bookmarkedStocksTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            bookmarkedStocksTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
         ])
     }
     
@@ -116,8 +116,8 @@ class MainViewController: UIViewController {
             searchBar.searchTableView.translatesAutoresizingMaskIntoConstraints = false
             
             NSLayoutConstraint.activate([
-                searchBar.searchTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
                 searchBar.searchTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                searchBar.searchTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
                 searchBar.searchTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10)
             ])
         } else {
@@ -228,6 +228,7 @@ extension MainViewController: UITableViewDataSource {
             cell?.textLabel?.text = bookmarks[indexPath.row].name
             cell?.detailTextLabel?.text = bookmarks[indexPath.row].day
             cell?.detailTextLabel?.textColor = .black
+            cell?.backgroundColor = .lightLightGray
             return cell!
         } else {
             return tableView.dequeueReusableCell(withIdentifier: "cell")!

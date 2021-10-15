@@ -33,6 +33,10 @@ class DetailedStockViewController: UIViewController {
         updateViews()
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false

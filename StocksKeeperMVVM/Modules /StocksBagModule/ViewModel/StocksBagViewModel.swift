@@ -10,7 +10,7 @@ import CoreData
 
 protocol StocksbagViewModelPrototocol {
     var updateViewData: ((ViewData)->())? {get set }
-//    func fetchBag() -> [StocksBag]?
+    func fetchBag() -> [StocksBag]?
     func add<T: NSManagedObject>(type: T.Type) -> T?
     func save()
     func delete<T: NSManagedObject>(object: T)
@@ -26,9 +26,10 @@ final class StocksBagViewModel: StocksbagViewModelPrototocol {
         self.coreDataManager = coreDataManager
     }
     
-//    func fetchBag() -> [StocksBag]? {
-//        return coreDataManager?.fetch(StocksBag.self)
-//    }
+    func fetchBag() -> [StocksBag]? {
+        let bag = coreDataManager?.fetch(StocksBag.self)
+        return coreDataManager?.fetch(StocksBag.self)
+    }
     
     func add<T: NSManagedObject>(type: T.Type) -> T? {
         return coreDataManager?.add(type)

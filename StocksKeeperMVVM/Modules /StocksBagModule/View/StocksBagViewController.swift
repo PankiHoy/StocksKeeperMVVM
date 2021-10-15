@@ -9,7 +9,7 @@ import UIKit
 
 class StocksBagViewController: UIViewController {
     var viewModel: StocksBagViewModel!
-//    var bag: StocksBag?
+    var bag: StocksBag?
     
     let searchBar = SearchBar()
     
@@ -17,10 +17,29 @@ class StocksBagViewController: UIViewController {
         let tableView = DinamicTableView()
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = .lightGray
+        tableView.layer.cornerRadius = 20
         
         return tableView
     }()
+    
+    lazy var profitLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.robotoBold(withSize: 30)
+        label.textColor = .white
+        label.text = "TOTAL PROFIT \n\n\(Int(bag?.profit ?? 0)) $USD"
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.sizeToFit()
+        
+        return label
+    }()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchBag()
+        stocksTableView.reloadData()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,9 +49,10 @@ class StocksBagViewController: UIViewController {
     func setup() {
         view.backgroundColor = .white
         
-//        fetchBag() 
+        fetchBag()
         configureTabBar()
         configureTableView()
+        configureSellButton()
     }
     
     func configureTabBar() {
@@ -42,21 +62,71 @@ class StocksBagViewController: UIViewController {
                                   selectedImage: UIImage(systemName: "bag.fill"))
         tabBarController?.tabBar.tintColor = .black
         navigationController?.navigationBar.tintColor = .black
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "banknote"), style: .plain, target: self, action: #selector(withdraw(sender:)))
         title = "Your Stocks"
     }
     
     func configureTableView() {
         stocksTableView.delegate = self
         stocksTableView.dataSource = self
-        stocksTableView.register(UITableViewCell.self, forCellReuseIdentifier: "stocksCell")
+        stocksTableView.register(StocksBagTableViewCell.self, forCellReuseIdentifier: StocksBagTableViewCell.identifier)
         
         view.addSubview(stocksTableView)
         stocksTableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            stocksTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            stocksTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            stocksTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+            stocksTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            stocksTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            stocksTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10)
+        ])
+    }
+    
+    func configureSellButton() {
+        let sellButton = UIButton()
+        sellButton.setImage(UIImage(systemName: "dollarsign.circle"), for: .normal)
+        sellButton.setImage(UIImage(systemName: "dollarsign.circle.fill"), for: .highlighted)
+        sellButton.setTitle("  SELL  ", for: .normal)
+        sellButton.titleLabel?.font = UIFont.robotoBold(withSize: 30)
+        sellButton.titleLabel?.textColor = .black
+        sellButton.titleLabel?.highlightedTextColor = .black
+        sellButton.tintColor = .black
+        sellButton.layer.cornerRadius = 20
+        sellButton.layer.borderWidth = 2
+        sellButton.layer.borderColor = UIColor.white.cgColor
+        
+        sellButton.addTarget(self, action: #selector(sellEverything(sender:)), for: .touchUpInside)
+        
+        let sellContentView = UIView()
+        sellContentView.backgroundColor = .lightLightGray
+        sellContentView.layer.cornerRadius = 20
+        
+        view.addSubview(sellContentView)
+        sellContentView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            sellContentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+            sellContentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+            sellContentView.topAnchor.constraint(equalTo: view.topAnchor, constant: UIScreen.main.bounds.height/2 + 10),
+            sellContentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50)
+        ])
+        
+        sellContentView.addSubview(sellButton)
+        sellButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            sellButton.topAnchor.constraint(equalTo: sellContentView.topAnchor, constant: 50),
+            sellButton.centerXAnchor.constraint(equalTo: sellContentView.centerXAnchor),
+            sellButton.heightAnchor.constraint(equalToConstant: 50),
+            sellButton.widthAnchor.constraint(equalToConstant: 100)
+        ])
+        
+        sellContentView.addSubview(profitLabel)
+        profitLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            profitLabel.topAnchor.constraint(equalTo: sellContentView.topAnchor, constant: 130),
+            profitLabel.centerXAnchor.constraint(equalTo: sellContentView.centerXAnchor)
         ])
     }
     
@@ -92,15 +162,14 @@ class StocksBagViewController: UIViewController {
         }
     }
     
-//    func fetchBag() {
-//        if viewModel.fetchBag()?.count == 0 {
-//            guard let stocksBag = viewModel.add(type: StocksBag.self) else { return }
-//            stocksBag.stocks = []
-//            viewModel.save()
-//        }
-//        bag = viewModel.fetchBag()?.first
-//        stocksTableView.reloadData()
-//    }
+    func fetchBag() {
+        if viewModel.fetchBag()?.count == 0 {
+            viewModel.add(type: StocksBag.self)
+            viewModel.save()
+        }
+        bag = viewModel.fetchBag()?.first
+        stocksTableView.reloadData()
+    }
     
     @objc func searchButtonTapped(sender: UIButton) {
         initiateSearch(true)
@@ -110,20 +179,50 @@ class StocksBagViewController: UIViewController {
         navigationItem.rightBarButtonItem = nil
         navigationItem.leftBarButtonItem = nil
     }
+    
+    @objc func sellEverything(sender: UIButton) {
+        for stock in bag!.stocksArray {
+            UIView.animate(withDuration: 0.25, animations: { [weak self] in
+                self?.reloadProfit(withAmount: stock.cost)
+                self?.bag?.removeFromStocks(stock)
+                self?.viewModel.save()
+                self?.stocksTableView.reloadData()
+            })
+        }
+    }
+    
+    func reloadProfit(withAmount amount: Double) {
+        bag?.profit += amount
+        profitLabel.text = "TOTAL PROFIT \n\n\(Int(bag?.profit ?? 0)) $USD"
+        profitLabel.setNeedsLayout()
+        profitLabel.layoutIfNeeded()
+    }
+    
+    @objc func withdraw(sender: UIBarButtonItem) {
+        bag?.profit = 0
+        reloadProfit(withAmount: 0)
+        viewModel.save()
+    }
 }
 
 extension StocksBagViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailedController = (UIApplication.shared.delegate as! AppDelegate).router.createDetailedStockModule(withSymbol: bag?.stocksArray[indexPath.row].symbol ?? "AAPL")
+        navigationController?.pushViewController(detailedController, animated: true)
+    }
 }
 
 extension StocksBagViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        0//return bag?.stocks?.count ?? 0
+        return bag?.stocks?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "stocksCell")
-//        cell?.textLabel?.text = (bag?.stocks as? [Stock]?)??.sorted(by: { $0.name! < $1.name! })[indexPath.row].name
+        let cell = tableView.dequeueReusableCell(withIdentifier: StocksBagTableViewCell.identifier) as? StocksBagTableViewCell
+        cell?.nameLabel.text = bag?.stocksArray[indexPath.row].name
+        cell?.amountLabel.text = String(bag?.stocksArray[indexPath.row].amount ?? 0)
+        cell?.costLabel.text = String(format: "%.1f", bag?.stocksArray[indexPath.row].cost ?? 0)
+        cell?.configureCell()
         
         return cell!
     }

@@ -222,19 +222,34 @@ extension DetailedControllerView {
     }
     
     @objc func buyStock(sender: UITapGestureRecognizer, amount: Int) {
-//        if delegate.viewModel?.fetch(type: StocksBag.self)?.count == 0 {
-//            guard let bag = delegate.viewModel?.fetch(type: StocksBag.self)?.first else { return }
-//            guard let stock = self.delegate.viewModel?.add(type: Stock.self) else { return }
-//            guard let company = company else { return }
-//            stock.name = company.name
-//            stock.desctiption = company.description
-//            stock.symbol = company.symbol
-//            stock.day = company.day
-//            stock.dayBefore = company.dayBefore
-//            stock.bookmarked = company.bookmarked ?? false
-//            bag.addToStocks(stock)
-//            delegate.viewModel?.save()
-//        }
+        buyStock()
+    }
+    
+    func buyStock() {
+        var bag: StocksBag?
+        if delegate.viewModel?.fetch(type: StocksBag.self)?.count == 0 {
+            delegate.viewModel?.add(type: StocksBag.self)
+            delegate.viewModel?.save()
+        }
+        bag = delegate.viewModel?.fetch(type: StocksBag.self)?.first
+        guard let company = company else { return }
+        if bag?.stocksArray.contains(where: { stock in return stock.symbol == company.symbol }) == true {
+            let indexOfStock = (bag?.stocksArray.firstIndex(where: { stock in
+                stock.symbol == company.symbol
+            })) ?? 0
+            bag?.stocksArray[indexOfStock].amount += 1
+            bag?.stocksArray[indexOfStock].cost = (Double(company.day!) ?? 0) * Double(bag?.stocksArray[indexOfStock].amount ?? 0)
+        } else {
+            guard let stock = self.delegate.viewModel?.add(type: StockToBuy.self) else { return }
+            stock.name = company.name
+            stock.symbol = company.symbol
+            stock.day = company.day
+            stock.dayBefore = company.dayBefore
+            stock.amount += 1
+            stock.cost = (Double(company.day ?? "0") ?? 0 * Double(stock.amount))
+            bag?.addToStocks(stock)
+        }
+        delegate.viewModel?.save()
     }
     
 }

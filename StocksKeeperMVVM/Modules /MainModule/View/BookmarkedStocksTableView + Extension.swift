@@ -13,6 +13,8 @@ extension BookmarkedStocksTableView {
         let tableView = DinamicTableView()
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
+        tableView.layer.cornerRadius = 20
+        tableView.backgroundColor = .lightGray
         
         return tableView
     }
