@@ -77,7 +77,6 @@ extension DetailedControllerView {
             stackView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 20),
             stackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 20),
             stackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -20),
-            stackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -50)
         ])
         
         let nameLabel = UILabel()
