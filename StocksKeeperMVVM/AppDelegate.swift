@@ -19,9 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         router = ModuleBuilder()
         
         let mainController = UINavigationController(rootViewController: router.createMainModule())
-        let stocksBagController = UINavigationController(rootViewController: router.createStocksBagModule())
+        let bagsController = UINavigationController(rootViewController: router.createBagsModule())
         
-        tabBarController.viewControllers = [mainController, stocksBagController]
+        tabBarController.viewControllers = [mainController, bagsController]
         
         window = UIWindow()
         window?.rootViewController = tabBarController

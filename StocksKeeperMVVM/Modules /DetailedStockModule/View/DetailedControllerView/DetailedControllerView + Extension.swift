@@ -8,6 +8,15 @@
 import UIKit
 
 extension DetailedControllerView {
+    func makeBuyBlock() -> BuyBlockView {
+        let view = BuyBlockView()
+        view.delegateController = self.delegate
+        view.delegateView = self
+        view.setup()
+        
+        return view
+    }
+    
     func makeActivityIndicator() -> UIActivityIndicatorView {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.color = .gray
@@ -51,7 +60,6 @@ extension DetailedControllerView {
             contentView.leadingAnchor.constraint(equalTo: leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            contentView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
         ])
         
         return contentView
@@ -66,10 +74,10 @@ extension DetailedControllerView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 50),
-            stackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 20),
-            stackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -20),
-            stackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -50)
+            stackView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            stackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            stackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
         ])
         
         let nameLabel = UILabel()
@@ -116,8 +124,11 @@ extension DetailedControllerView {
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        nameLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        nameLabel.topAnchor.constraint(equalTo: stackView.topAnchor, constant: 50).isActive = true
+        NSLayoutConstraint.activate([
+            nameLabel.heightAnchor.constraint(equalToConstant: 50),
+            nameLabel.topAnchor.constraint(equalTo: stackView.topAnchor, constant: 50),
+            descriptionLabel.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: -30)
+        ])
         
         return stackView
     }
@@ -177,19 +188,10 @@ extension DetailedControllerView {
         dayBeforeLabel.translatesAutoresizingMaskIntoConstraints = false
         dayValueLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        let randomLabel = UIButton()
-        randomLabel.setTitle("BUY", for: .normal)
-        randomLabel.titleLabel?.textAlignment = .center
-        randomLabel.titleLabel?.numberOfLines = 0
-        randomLabel.titleLabel?.font = UIFont.robotoMedium(withSize: 25)
-        randomLabel.setTitleColor(.black, for: .normal)
-        
-        randomLabel.addTarget(self, action: #selector(buyStock(sender:amount:)), for: .touchUpInside)
-        
         horizontalStack.addArrangedSubview(stack)
         horizontalStack.addArrangedSubview(arrowStack)
-        horizontalStack.addArrangedSubview(randomLabel)
-        
+        horizontalStack.addArrangedSubview(buyBlockView)
+
         return horizontalStack
     }
     
@@ -206,7 +208,7 @@ extension DetailedControllerView {
     }
     
     func deleteStock() {
-        delegate.viewModel?.delete(symbol: company.symbol)
+        delegate.viewModel?.delete(type: Stock.self, symbol: company.symbol)
     }
     
     func saveStock() {
@@ -220,37 +222,5 @@ extension DetailedControllerView {
         stock.bookmarked = true
         delegate.viewModel?.save()
     }
-    
-    @objc func buyStock(sender: UITapGestureRecognizer, amount: Int) {
-        buyStock()
-    }
-    
-    func buyStock() {
-        var bag: StocksBag?
-        if delegate.viewModel?.fetch(type: StocksBag.self)?.count == 0 {
-            delegate.viewModel?.add(type: StocksBag.self)
-            delegate.viewModel?.save()
-        }
-        bag = delegate.viewModel?.fetch(type: StocksBag.self)?.first
-        guard let company = company else { return }
-        if bag?.stocksArray.contains(where: { stock in return stock.symbol == company.symbol }) == true {
-            let indexOfStock = (bag?.stocksArray.firstIndex(where: { stock in
-                stock.symbol == company.symbol
-            })) ?? 0
-            bag?.stocksArray[indexOfStock].amount += 1
-            bag?.stocksArray[indexOfStock].cost = (Double(company.day!) ?? 0) * Double(bag?.stocksArray[indexOfStock].amount ?? 0)
-        } else {
-            guard let stock = self.delegate.viewModel?.add(type: StockToBuy.self) else { return }
-            stock.name = company.name
-            stock.symbol = company.symbol
-            stock.day = company.day
-            stock.dayBefore = company.dayBefore
-            stock.amount += 1
-            stock.cost = (Double(company.day ?? "0") ?? 0 * Double(stock.amount))
-            bag?.addToStocks(stock)
-        }
-        delegate.viewModel?.save()
-    }
-    
 }
 

@@ -22,7 +22,8 @@ class DetailedControllerView: UIView {
     
     lazy var contentView = makeContentView()
     lazy var activityIndicator = makeActivityIndicator()
-    var stackView: UIStackView!
+    lazy var buyBlockView = makeBuyBlock()
+    lazy var stackView: UIStackView? = UIStackView()
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -44,7 +45,7 @@ class DetailedControllerView: UIView {
     }
     
     func update(viewData: DetailedViewData.CompanyOverview?, isHidden: Bool) {
-        stackView = nil
+        stackView?.removeFromSuperview()
         stackView = makeStackView(name: viewData?.name, symbol: viewData?.symbol, description: viewData?.description, day: viewData?.day, dayBefore: viewData?.dayBefore, bookmarked: viewData?.bookmarked)
         company = viewData
     }

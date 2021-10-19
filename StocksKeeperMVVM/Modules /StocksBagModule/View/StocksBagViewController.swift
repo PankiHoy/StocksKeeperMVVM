@@ -37,7 +37,7 @@ class StocksBagViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchBag()
+        
         stocksTableView.reloadData()
     }
     
@@ -46,10 +46,18 @@ class StocksBagViewController: UIViewController {
         setup()
     }
     
+    init(withBag bag: StocksBag) {
+        super.init(nibName: nil, bundle: nil)
+        self.bag = bag
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     func setup() {
         view.backgroundColor = .white
         
-        fetchBag()
         configureTabBar()
         configureTableView()
         configureSellButton()
@@ -64,7 +72,7 @@ class StocksBagViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .black
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "banknote"), style: .plain, target: self, action: #selector(withdraw(sender:)))
-        title = "Your Stocks"
+        title = bag?.name
     }
     
     func configureTableView() {
@@ -160,15 +168,6 @@ class StocksBagViewController: UIViewController {
         viewModel.updateViewData = { [weak self] viewData in
             self?.searchBar.viewData = viewData
         }
-    }
-    
-    func fetchBag() {
-        if viewModel.fetchBag()?.count == 0 {
-            viewModel.add(type: StocksBag.self)
-            viewModel.save()
-        }
-        bag = viewModel.fetchBag()?.first
-        stocksTableView.reloadData()
     }
     
     @objc func searchButtonTapped(sender: UIButton) {

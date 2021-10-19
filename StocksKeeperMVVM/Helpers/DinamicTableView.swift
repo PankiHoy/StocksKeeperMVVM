@@ -21,7 +21,7 @@ class DinamicTableView: UITableView {
     }
     
     func setup() {
-        backgroundColor = .lightLightGray
+        
     }
     
     override func reloadData() {

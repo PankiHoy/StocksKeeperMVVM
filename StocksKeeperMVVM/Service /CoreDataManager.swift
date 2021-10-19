@@ -8,7 +8,19 @@
 import Foundation
 import CoreData
 
-class CoreDataManager {
+protocol CoreDataManagerProtocol {
+    var viewContext: NSManagedObjectContext { get }
+    func add <T: NSManagedObject>(_ type: T.Type) -> T?
+    func fetch <T: NSManagedObject>(_ type: T.Type) -> [T]?
+    func fetch <T: NSManagedObject>(_ type: T.Type, _ key: String) -> T?
+    func save()
+    func delete<T: NSManagedObject>(object: T)
+    func delete<T: NSManagedObject>(_ type: T.Type, symbol: String?)
+    func delete<T: NSManagedObject>(_ type: T.Type, key: String?)
+    func deleteAll<T: NSManagedObject>(_ type: T.Type)
+}
+
+class CoreDataManager: CoreDataManagerProtocol {
     let persistentContainer: NSPersistentContainer
     static let shared = CoreDataManager()
     
@@ -34,6 +46,21 @@ class CoreDataManager {
         }
     }
     
+    func fetch <T: NSManagedObject>(_ type: T.Type, _ key: String) -> T? {
+        guard let entityName = T.entity().name else { return nil }
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+        request.predicate = NSPredicate(format: "name == %@", key)
+        do {
+            let entities = try viewContext.fetch(request)
+            if let entity = entities.first {
+                return entity as? T
+            }
+        } catch {
+            print("bag couldn't be founded, \(error.localizedDescription)")
+        }
+        return nil
+    }
+    
     func save() {
         do {
             try viewContext.save()
@@ -48,15 +75,47 @@ class CoreDataManager {
         save()
     }
     
-    func delete(symbol: String?) {
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Stock")
+    func delete<T: NSManagedObject>(_ type: T.Type, symbol: String?) {
+        guard let entityName = T.entity().name else { return }
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
         request.predicate = NSPredicate(format: "symbol == %@", symbol ?? "")
         do {
             let stockToRemove = try viewContext.fetch(request)
-            viewContext.delete(stockToRemove.first as! NSManagedObject)
+            if let stockToRemove = stockToRemove.first {
+                viewContext.delete(stockToRemove as! NSManagedObject)
+            }
             try viewContext.save()
         } catch {
             print("stock can not be removed 'cause \(error.localizedDescription)")
+        }
+    }
+    
+    func delete<T: NSManagedObject>(_ type: T.Type, key: String?) {
+        guard let entityName = T.entity().name else { return }
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+        request.predicate = NSPredicate(format: "symbol == %@", key ?? "")
+        do {
+            let bagToRemoveArray = try viewContext.fetch(request)
+            if let bagToRemove = bagToRemoveArray.first {
+                viewContext.delete(bagToRemove as! NSManagedObject)
+            }
+            try viewContext.save()
+        } catch {
+            print("stock can not be removed 'cause \(error.localizedDescription)")
+        }
+    }
+    
+    func deleteAll<T: NSManagedObject>(_ type: T.Type) {
+        guard let entityName = T.entity().name else { return }
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+        do {
+            let arraytoRemove = try viewContext.fetch(request)
+            for obj in arraytoRemove {
+                viewContext.delete(obj as! NSManagedObject)
+            }
+            try viewContext.save()
+        } catch {
+            print("object can not be removed 'cause \(error.localizedDescription)")
         }
     }
     

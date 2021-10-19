@@ -10,7 +10,7 @@ import UIKit
 
 protocol ModuleBuilderProtocol {
     func createMainModule() -> UIViewController
-    func createStocksBagModule() -> UIViewController
+    func createStocksBagModule(withBag bag: StocksBag) -> UIViewController
     func createDetailedStockModule(withSymbol symbol: String) -> UIViewController
 }
 
@@ -26,8 +26,16 @@ class ModuleBuilder: ModuleBuilderProtocol {
         return view
     }
     
-    func createStocksBagModule() -> UIViewController {
-        let view = StocksBagViewController()
+    func createBagsModule() -> UIViewController {
+        let view = BagViewController()
+        let viewModel = BagViewModel(networkService, coreDataManager)
+        view.viewModel = viewModel
+        
+        return view
+    }
+    
+    func createStocksBagModule(withBag bag: StocksBag) -> UIViewController {
+        let view = StocksBagViewController(withBag: bag)
         let viewModel = StocksBagViewModel(networkService, coreDataManager)
         view.viewModel = viewModel
         

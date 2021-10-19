@@ -26,8 +26,6 @@
 		D774954C27107FEB0003F14B /* DetailedViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D774954B27107FEB0003F14B /* DetailedViewData.swift */; };
 		D774954E271080E20003F14B /* DetailedStockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D774954D271080E20003F14B /* DetailedStockViewController.swift */; };
 		D77495502710896E0003F14B /* DetailedControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D774954F2710896E0003F14B /* DetailedControllerView.swift */; };
-		D7988CFA271984F700193F42 /* StockToBuy+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7988CF8271984F700193F42 /* StockToBuy+CoreDataClass.swift */; };
-		D7988CFB271984F700193F42 /* StockToBuy+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7988CF9271984F700193F42 /* StockToBuy+CoreDataProperties.swift */; };
 		D7988CFD2719896500193F42 /* StocksBagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7988CFC2719896500193F42 /* StocksBagTableViewCell.swift */; };
 		D7988CFF27199D0C00193F42 /* UIColor + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7988CFE27199D0C00193F42 /* UIColor + Extension.swift */; };
 		D7B21B522715B3950001C146 /* StocksBagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B21B512715B3950001C146 /* StocksBagViewModel.swift */; };
@@ -36,6 +34,13 @@
 		D7B21B5A2715B9B10001C146 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B21B592715B9B10001C146 /* CoreDataManager.swift */; };
 		D7BF0726271858E200B0C2FF /* StocksBagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7BF0725271858E200B0C2FF /* StocksBagViewController.swift */; };
 		D7BF074B271876EC00B0C2FF /* StocksKeeperMVVM.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D7BF0749271876EC00B0C2FF /* StocksKeeperMVVM.xcdatamodeld */; };
+		D7DC9FF8271B002F0012B943 /* BagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DC9FF7271B002F0012B943 /* BagViewModel.swift */; };
+		D7DC9FFA271B19840012B943 /* BagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DC9FF9271B19840012B943 /* BagViewController.swift */; };
+		D7DC9FFC271B1F7E0012B943 /* BagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DC9FFB271B1F7E0012B943 /* BagCollectionViewCell.swift */; };
+		D7DC9FFF271C62290012B943 /* AddBagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DC9FFE271C62290012B943 /* AddBagView.swift */; };
+		D7DCA002271C86B40012B943 /* BagViewController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DCA001271C86B40012B943 /* BagViewController + Extension.swift */; };
+		D7DCA008271EBAC30012B943 /* MainViewController + Extension .swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DCA007271EBAC30012B943 /* MainViewController + Extension .swift */; };
+		D7DCA00A271EC8F00012B943 /* BuyBlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DCA009271EC8F00012B943 /* BuyBlockView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,8 +65,6 @@
 		D774954B27107FEB0003F14B /* DetailedViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedViewData.swift; sourceTree = "<group>"; };
 		D774954D271080E20003F14B /* DetailedStockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedStockViewController.swift; sourceTree = "<group>"; };
 		D774954F2710896E0003F14B /* DetailedControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedControllerView.swift; sourceTree = "<group>"; };
-		D7988CF8271984F700193F42 /* StockToBuy+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StockToBuy+CoreDataClass.swift"; sourceTree = "<group>"; };
-		D7988CF9271984F700193F42 /* StockToBuy+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StockToBuy+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D7988CFC2719896500193F42 /* StocksBagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksBagTableViewCell.swift; sourceTree = "<group>"; };
 		D7988CFE27199D0C00193F42 /* UIColor + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Extension.swift"; sourceTree = "<group>"; };
 		D7B21B512715B3950001C146 /* StocksBagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksBagViewModel.swift; sourceTree = "<group>"; };
@@ -70,6 +73,13 @@
 		D7B21B592715B9B10001C146 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		D7BF0725271858E200B0C2FF /* StocksBagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksBagViewController.swift; sourceTree = "<group>"; };
 		D7BF074A271876EC00B0C2FF /* StocksKeeperMVVM.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StocksKeeperMVVM.xcdatamodel; sourceTree = "<group>"; };
+		D7DC9FF7271B002F0012B943 /* BagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BagViewModel.swift; sourceTree = "<group>"; };
+		D7DC9FF9271B19840012B943 /* BagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BagViewController.swift; sourceTree = "<group>"; };
+		D7DC9FFB271B1F7E0012B943 /* BagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BagCollectionViewCell.swift; sourceTree = "<group>"; };
+		D7DC9FFE271C62290012B943 /* AddBagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBagView.swift; sourceTree = "<group>"; };
+		D7DCA001271C86B40012B943 /* BagViewController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BagViewController + Extension.swift"; sourceTree = "<group>"; };
+		D7DCA007271EBAC30012B943 /* MainViewController + Extension .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController + Extension .swift"; sourceTree = "<group>"; };
+		D7DCA009271EC8F00012B943 /* BuyBlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyBlockView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				D774952D27105ABD0003F14B /* StocksBagModule */,
+				D7DC9FF3271B000C0012B943 /* BagsModule */,
 				D774952C27105AB60003F14B /* MainModule */,
 				D774952E27105AC80003F14B /* DetailedStockModule */,
 			);
@@ -166,11 +177,9 @@
 		D774953027105AE60003F14B /* View */ = {
 			isa = PBXGroup;
 			children = (
-				D774953427105B9D0003F14B /* MainViewController.swift */,
-				D7B21B562715B6570001C146 /* BookmarkedStocksTableView.swift */,
-				D7B21B542715B41F0001C146 /* BookmarkedStocksTableView + Extension.swift */,
-				D774953B271061670003F14B /* SearchBar.swift */,
-				D774953D271061760003F14B /* SearchBar + Extension .swift */,
+				D7DCA00E271ED0110012B943 /* MainViewController */,
+				D7DCA010271ED02D0012B943 /* SearchBar */,
+				D7DCA00F271ED0190012B943 /* BookmarkedStocksTableVIew */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -221,9 +230,9 @@
 		D774954727107DAC0003F14B /* View */ = {
 			isa = PBXGroup;
 			children = (
-				D774954D271080E20003F14B /* DetailedStockViewController.swift */,
-				D774954F2710896E0003F14B /* DetailedControllerView.swift */,
-				D74C3CBC27134DEF00FE7B66 /* DetailedControllerView + Extension.swift */,
+				D7DCA011271ED03C0012B943 /* DetailedStockViewController */,
+				D7DCA012271ED04A0012B943 /* DetailedControllerView */,
+				D7DCA013271ED0530012B943 /* BuyBlockView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -248,8 +257,6 @@
 		D7988CF7271984E200193F42 /* StockToBuy */ = {
 			isa = PBXGroup;
 			children = (
-				D7988CF8271984F700193F42 /* StockToBuy+CoreDataClass.swift */,
-				D7988CF9271984F700193F42 /* StockToBuy+CoreDataProperties.swift */,
 			);
 			path = StockToBuy;
 			sourceTree = "<group>";
@@ -278,6 +285,118 @@
 				D7988CF6271984DC00193F42 /* Stocksbag */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		D7DC9FF3271B000C0012B943 /* BagsModule */ = {
+			isa = PBXGroup;
+			children = (
+				D7DC9FF6271B00250012B943 /* Model */,
+				D7DC9FF5271B00230012B943 /* View */,
+				D7DC9FF4271B001C0012B943 /* ViewModel */,
+			);
+			path = BagsModule;
+			sourceTree = "<group>";
+		};
+		D7DC9FF4271B001C0012B943 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				D7DC9FF7271B002F0012B943 /* BagViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D7DC9FF5271B00230012B943 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D7DCA00B271ECFC30012B943 /* BagViewController */,
+				D7DCA00C271ECFD40012B943 /* AddBagView */,
+				D7DCA00D271ECFF60012B943 /* HelperViews */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D7DC9FF6271B00250012B943 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D7DCA00B271ECFC30012B943 /* BagViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D7DC9FF9271B19840012B943 /* BagViewController.swift */,
+				D7DCA001271C86B40012B943 /* BagViewController + Extension.swift */,
+			);
+			path = BagViewController;
+			sourceTree = "<group>";
+		};
+		D7DCA00C271ECFD40012B943 /* AddBagView */ = {
+			isa = PBXGroup;
+			children = (
+				D7DC9FFE271C62290012B943 /* AddBagView.swift */,
+			);
+			path = AddBagView;
+			sourceTree = "<group>";
+		};
+		D7DCA00D271ECFF60012B943 /* HelperViews */ = {
+			isa = PBXGroup;
+			children = (
+				D7DC9FFB271B1F7E0012B943 /* BagCollectionViewCell.swift */,
+			);
+			path = HelperViews;
+			sourceTree = "<group>";
+		};
+		D7DCA00E271ED0110012B943 /* MainViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D774953427105B9D0003F14B /* MainViewController.swift */,
+				D7DCA007271EBAC30012B943 /* MainViewController + Extension .swift */,
+			);
+			path = MainViewController;
+			sourceTree = "<group>";
+		};
+		D7DCA00F271ED0190012B943 /* BookmarkedStocksTableVIew */ = {
+			isa = PBXGroup;
+			children = (
+				D7B21B562715B6570001C146 /* BookmarkedStocksTableView.swift */,
+				D7B21B542715B41F0001C146 /* BookmarkedStocksTableView + Extension.swift */,
+			);
+			path = BookmarkedStocksTableVIew;
+			sourceTree = "<group>";
+		};
+		D7DCA010271ED02D0012B943 /* SearchBar */ = {
+			isa = PBXGroup;
+			children = (
+				D774953D271061760003F14B /* SearchBar + Extension .swift */,
+				D774953B271061670003F14B /* SearchBar.swift */,
+			);
+			path = SearchBar;
+			sourceTree = "<group>";
+		};
+		D7DCA011271ED03C0012B943 /* DetailedStockViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D774954D271080E20003F14B /* DetailedStockViewController.swift */,
+			);
+			path = DetailedStockViewController;
+			sourceTree = "<group>";
+		};
+		D7DCA012271ED04A0012B943 /* DetailedControllerView */ = {
+			isa = PBXGroup;
+			children = (
+				D774954F2710896E0003F14B /* DetailedControllerView.swift */,
+				D74C3CBC27134DEF00FE7B66 /* DetailedControllerView + Extension.swift */,
+			);
+			path = DetailedControllerView;
+			sourceTree = "<group>";
+		};
+		D7DCA013271ED0530012B943 /* BuyBlockView */ = {
+			isa = PBXGroup;
+			children = (
+				D7DCA009271EC8F00012B943 /* BuyBlockView.swift */,
+			);
+			path = BuyBlockView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -353,7 +472,6 @@
 				D7B21B552715B41F0001C146 /* BookmarkedStocksTableView + Extension.swift in Sources */,
 				D7749515271045050003F14B /* AppDelegate.swift in Sources */,
 				D77495502710896E0003F14B /* DetailedControllerView.swift in Sources */,
-				D7988CFA271984F700193F42 /* StockToBuy+CoreDataClass.swift in Sources */,
 				D745637B271980B2007EF0BB /* StocksBag+CoreDataProperties.swift in Sources */,
 				D774953C271061670003F14B /* SearchBar.swift in Sources */,
 				D7B21B522715B3950001C146 /* StocksBagViewModel.swift in Sources */,
@@ -361,6 +479,8 @@
 				D774954C27107FEB0003F14B /* DetailedViewData.swift in Sources */,
 				D774954427106DDD0003F14B /* ModuleBuilder.swift in Sources */,
 				D774953A27105C3C0003F14B /* NetworkService .swift in Sources */,
+				D7DC9FFC271B1F7E0012B943 /* BagCollectionViewCell.swift in Sources */,
+				D7DCA008271EBAC30012B943 /* MainViewController + Extension .swift in Sources */,
 				D7BF0726271858E200B0C2FF /* StocksBagViewController.swift in Sources */,
 				D7988CFD2719896500193F42 /* StocksBagTableViewCell.swift in Sources */,
 				D745637A271980B2007EF0BB /* StocksBag+CoreDataClass.swift in Sources */,
@@ -368,14 +488,18 @@
 				D7B21B572715B6570001C146 /* BookmarkedStocksTableView.swift in Sources */,
 				D774953327105AFC0003F14B /* CompaniesData.swift in Sources */,
 				D7988CFF27199D0C00193F42 /* UIColor + Extension.swift in Sources */,
+				D7DCA002271C86B40012B943 /* BagViewController + Extension.swift in Sources */,
 				D774953527105B9D0003F14B /* MainViewController.swift in Sources */,
+				D7DC9FFA271B19840012B943 /* BagViewController.swift in Sources */,
+				D7DC9FFF271C62290012B943 /* AddBagView.swift in Sources */,
 				D774954E271080E20003F14B /* DetailedStockViewController.swift in Sources */,
 				D74C3CBD27134DEF00FE7B66 /* DetailedControllerView + Extension.swift in Sources */,
+				D7DCA00A271EC8F00012B943 /* BuyBlockView.swift in Sources */,
 				D774953727105BA70003F14B /* MainViewModel.swift in Sources */,
-				D7988CFB271984F700193F42 /* StockToBuy+CoreDataProperties.swift in Sources */,
 				D7B21B5A2715B9B10001C146 /* CoreDataManager.swift in Sources */,
 				D774953E271061760003F14B /* SearchBar + Extension .swift in Sources */,
 				D7BF074B271876EC00B0C2FF /* StocksKeeperMVVM.xcdatamodeld in Sources */,
+				D7DC9FF8271B002F0012B943 /* BagViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

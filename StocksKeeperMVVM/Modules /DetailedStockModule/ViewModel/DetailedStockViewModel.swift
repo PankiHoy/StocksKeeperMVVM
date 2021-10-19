@@ -15,16 +15,18 @@ protocol DetailedStockViewModelProtocol {
     func save()
     func delete<T: NSManagedObject>(object: T)
     func fetch<T: NSManagedObject>(type: T.Type) -> [T]?
+    func fetchBags() -> [StocksBag]?
+    func fetchBag(name: String) -> StocksBag?
 }
 
 final class DetailedStockViewModel: DetailedStockViewModelProtocol {
     public var updateViewData: ((DetailedViewData) -> ())?
     private var networkService: NetworkServiceProtocol?
-    private var coreDataManager: CoreDataManager?
+    private var coreDataManager: CoreDataManagerProtocol?
     
     private var symbol: String!
     
-    init(_ networkService: NetworkServiceProtocol, _ coreDataManager: CoreDataManager, _ symbol: String) {
+    init(_ networkService: NetworkServiceProtocol, _ coreDataManager: CoreDataManagerProtocol, _ symbol: String) {
         self.networkService = networkService
         self.coreDataManager = coreDataManager
         self.symbol = symbol
@@ -70,6 +72,20 @@ final class DetailedStockViewModel: DetailedStockViewModelProtocol {
         }
     }
     
+    func fetch<T>(type: T.Type) -> [T]? where T : NSManagedObject {
+        return coreDataManager?.fetch(type)
+    }
+    
+    func fetchBags() -> [StocksBag]? {
+        let bags = coreDataManager?.fetch(StocksBag.self)
+        return bags
+    }
+    
+    func fetchBag(name: String) -> StocksBag? {
+        let bag = coreDataManager?.fetch(StocksBag.self, name)
+        return bag
+    }
+    
     func add<T: NSManagedObject>(type: T.Type) -> T? {
         return coreDataManager?.add(type)
     }
@@ -82,11 +98,7 @@ final class DetailedStockViewModel: DetailedStockViewModelProtocol {
         coreDataManager?.delete(object: object)
     }
     
-    func delete(symbol: String?) {
-        coreDataManager?.delete(symbol: symbol)
-    }
-    
-    func fetch<T>(type: T.Type) -> [T]? where T : NSManagedObject {
-        return coreDataManager?.fetch(type)
+    func delete<T: NSManagedObject>(type: T.Type, symbol: String?) {
+        coreDataManager?.delete(type, symbol: symbol)
     }
 }

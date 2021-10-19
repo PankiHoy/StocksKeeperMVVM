@@ -16,6 +16,7 @@ extension StocksBag {
         return NSFetchRequest<StocksBag>(entityName: "StocksBag")
     }
 
+    @NSManaged public var name: String?
     @NSManaged public var profit: Double
     @NSManaged public var stocks: NSSet?
     
