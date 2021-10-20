@@ -20,8 +20,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let mainController = UINavigationController(rootViewController: router.createMainModule())
         let bagsController = UINavigationController(rootViewController: router.createBagsModule())
+        mainController.navigationBar.tintColor = .black
+        bagsController.navigationBar.tintColor = .black
         
         tabBarController.viewControllers = [mainController, bagsController]
+        tabBarController.tabBar.tintColor = .black
         
         window = UIWindow()
         window?.rootViewController = tabBarController

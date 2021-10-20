@@ -10,13 +10,13 @@ import UIKit
 
 extension MainViewController {
     func configureTabBar() {
+        title = "Favorites"
+        view.backgroundColor = .white
+        
         tabBarController?.tabBar.isHidden = false
-        tabBarController?.tabBarItem = UITabBarItem(title: "Favorites",
+        tabBarItem = UITabBarItem(title: "Favorites",
                                   image: UIImage(systemName: "star"),
                                   selectedImage: UIImage(systemName: "star.fill"))
-        tabBarController?.tabBar.tintColor = .black
-        navigationController?.navigationBar.tintColor = .black
-        title = "Favorites"
     }
     
     func configureSearchBar() {

@@ -25,6 +25,15 @@ class MainViewController: UIViewController {
         return label
     }()
     
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nil, bundle: nil)
+        configureTabBar()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchBookMarks()
@@ -39,7 +48,6 @@ class MainViewController: UIViewController {
     }
     
     func setup() {
-        view.backgroundColor = .white
         configureTabBar()
         configureSearchBar()
     }

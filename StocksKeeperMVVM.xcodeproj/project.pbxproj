@@ -26,7 +26,6 @@
 		D774954C27107FEB0003F14B /* DetailedViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D774954B27107FEB0003F14B /* DetailedViewData.swift */; };
 		D774954E271080E20003F14B /* DetailedStockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D774954D271080E20003F14B /* DetailedStockViewController.swift */; };
 		D77495502710896E0003F14B /* DetailedControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D774954F2710896E0003F14B /* DetailedControllerView.swift */; };
-		D7988CFD2719896500193F42 /* StocksBagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7988CFC2719896500193F42 /* StocksBagTableViewCell.swift */; };
 		D7988CFF27199D0C00193F42 /* UIColor + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7988CFE27199D0C00193F42 /* UIColor + Extension.swift */; };
 		D7B21B522715B3950001C146 /* StocksBagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B21B512715B3950001C146 /* StocksBagViewModel.swift */; };
 		D7B21B552715B41F0001C146 /* BookmarkedStocksTableView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B21B542715B41F0001C146 /* BookmarkedStocksTableView + Extension.swift */; };
@@ -41,6 +40,7 @@
 		D7DCA002271C86B40012B943 /* BagViewController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DCA001271C86B40012B943 /* BagViewController + Extension.swift */; };
 		D7DCA008271EBAC30012B943 /* MainViewController + Extension .swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DCA007271EBAC30012B943 /* MainViewController + Extension .swift */; };
 		D7DCA00A271EC8F00012B943 /* BuyBlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DCA009271EC8F00012B943 /* BuyBlockView.swift */; };
+		D7DCA016272025D50012B943 /* ExpandableCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DCA015272025D50012B943 /* ExpandableCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,7 +65,6 @@
 		D774954B27107FEB0003F14B /* DetailedViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedViewData.swift; sourceTree = "<group>"; };
 		D774954D271080E20003F14B /* DetailedStockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedStockViewController.swift; sourceTree = "<group>"; };
 		D774954F2710896E0003F14B /* DetailedControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedControllerView.swift; sourceTree = "<group>"; };
-		D7988CFC2719896500193F42 /* StocksBagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksBagTableViewCell.swift; sourceTree = "<group>"; };
 		D7988CFE27199D0C00193F42 /* UIColor + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Extension.swift"; sourceTree = "<group>"; };
 		D7B21B512715B3950001C146 /* StocksBagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksBagViewModel.swift; sourceTree = "<group>"; };
 		D7B21B542715B41F0001C146 /* BookmarkedStocksTableView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookmarkedStocksTableView + Extension.swift"; sourceTree = "<group>"; };
@@ -80,6 +79,7 @@
 		D7DCA001271C86B40012B943 /* BagViewController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BagViewController + Extension.swift"; sourceTree = "<group>"; };
 		D7DCA007271EBAC30012B943 /* MainViewController + Extension .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController + Extension .swift"; sourceTree = "<group>"; };
 		D7DCA009271EC8F00012B943 /* BuyBlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyBlockView.swift; sourceTree = "<group>"; };
+		D7DCA015272025D50012B943 /* ExpandableCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +114,7 @@
 			children = (
 				D774954227106DD50003F14B /* ModuleBuilder */,
 				D774953F271061C40003F14B /* Helpers */,
+				D7DCA014272025810012B943 /* Extensions */,
 				D774953827105C310003F14B /* Service  */,
 				D774952B27105AB00003F14B /* Modules  */,
 				D7749514271045050003F14B /* AppDelegate.swift */,
@@ -205,8 +206,6 @@
 			isa = PBXGroup;
 			children = (
 				D7749540271061DB0003F14B /* DinamicTableView.swift */,
-				D74C3CBE2713545D00FE7B66 /* UIFont + Extension.swift */,
-				D7988CFE27199D0C00193F42 /* UIColor + Extension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -273,7 +272,7 @@
 			isa = PBXGroup;
 			children = (
 				D7BF0725271858E200B0C2FF /* StocksBagViewController.swift */,
-				D7988CFC2719896500193F42 /* StocksBagTableViewCell.swift */,
+				D7DCA015272025D50012B943 /* ExpandableCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -399,6 +398,15 @@
 			path = BuyBlockView;
 			sourceTree = "<group>";
 		};
+		D7DCA014272025810012B943 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D74C3CBE2713545D00FE7B66 /* UIFont + Extension.swift */,
+				D7988CFE27199D0C00193F42 /* UIColor + Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -482,7 +490,6 @@
 				D7DC9FFC271B1F7E0012B943 /* BagCollectionViewCell.swift in Sources */,
 				D7DCA008271EBAC30012B943 /* MainViewController + Extension .swift in Sources */,
 				D7BF0726271858E200B0C2FF /* StocksBagViewController.swift in Sources */,
-				D7988CFD2719896500193F42 /* StocksBagTableViewCell.swift in Sources */,
 				D745637A271980B2007EF0BB /* StocksBag+CoreDataClass.swift in Sources */,
 				D774954A27107DBE0003F14B /* DetailedStockViewModel.swift in Sources */,
 				D7B21B572715B6570001C146 /* BookmarkedStocksTableView.swift in Sources */,
@@ -493,6 +500,7 @@
 				D7DC9FFA271B19840012B943 /* BagViewController.swift in Sources */,
 				D7DC9FFF271C62290012B943 /* AddBagView.swift in Sources */,
 				D774954E271080E20003F14B /* DetailedStockViewController.swift in Sources */,
+				D7DCA016272025D50012B943 /* ExpandableCollectionViewCell.swift in Sources */,
 				D74C3CBD27134DEF00FE7B66 /* DetailedControllerView + Extension.swift in Sources */,
 				D7DCA00A271EC8F00012B943 /* BuyBlockView.swift in Sources */,
 				D774953727105BA70003F14B /* MainViewModel.swift in Sources */,

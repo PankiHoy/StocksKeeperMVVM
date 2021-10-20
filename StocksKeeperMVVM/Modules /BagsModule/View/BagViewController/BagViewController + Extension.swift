@@ -16,9 +16,6 @@ extension BagViewController {
         tabBarItem = UITabBarItem(title: "Your Bags",
                                   image: UIImage(systemName: "bag"),
                                   selectedImage: UIImage(systemName: "bag.fill"))
-        tabBarController?.tabBar.tintColor = .black
-        
-        navigationController?.navigationBar.tintColor = .black
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(addBag(sender:)))
     }
     
