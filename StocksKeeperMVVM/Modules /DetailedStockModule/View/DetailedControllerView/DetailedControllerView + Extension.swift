@@ -106,7 +106,7 @@ extension DetailedControllerView {
         
         symbolLabel.translatesAutoresizingMaskIntoConstraints = false
         bookMarkLabel.translatesAutoresizingMaskIntoConstraints = false
-
+        
         symbolLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/2).isActive = true
         bookMarkLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/2).isActive = true
         
@@ -115,10 +115,14 @@ extension DetailedControllerView {
         descriptionLabel.font = UIFont.robotoItalic(withSize: 25)
         descriptionLabel.numberOfLines = 0
         
+        let stocksValuesBlock = configureStocksValues(day: day, dayBefore: dayBefore)
+        
         stackView.addArrangedSubview(nameLabel)
         stackView.addArrangedSubview(horizontalStack)
-        stackView.addArrangedSubview(configureStocksValues(day: day, dayBefore: dayBefore))
+        stackView.addArrangedSubview(stocksValuesBlock)
         stackView.addArrangedSubview(descriptionLabel)
+        
+        stackView.bringSubviewToFront(stocksValuesBlock)
         
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -190,7 +194,10 @@ extension DetailedControllerView {
         horizontalStack.addArrangedSubview(stack)
         horizontalStack.addArrangedSubview(arrowStack)
         horizontalStack.addArrangedSubview(buyBlockView)
-
+        
+        horizontalStack.bringSubviewToFront(buyBlockView)
+        stack.bringSubviewToFront(horizontalStack)
+        
         return horizontalStack
     }
     
@@ -222,4 +229,3 @@ extension DetailedControllerView {
         delegate.viewModel?.save()
     }
 }
-

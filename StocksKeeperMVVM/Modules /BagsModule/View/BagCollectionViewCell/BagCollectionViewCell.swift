@@ -37,7 +37,6 @@ class BagCollectionViewCell: UICollectionViewCell {
         view.font = UIFont.robotoItalic(withSize: 24)
         view.textColor = .white
         view.textAlignment = .center
-        view.text = bagName
         
         return view
     }()
@@ -47,7 +46,6 @@ class BagCollectionViewCell: UICollectionViewCell {
         costLabel.font = UIFont.robotoMedium(withSize: 20)
         costLabel.textColor = .white
         costLabel.textAlignment = .center
-        costLabel.text = String(format: "%0.2f", cost ?? 0)
         
         return costLabel
     }()
@@ -60,6 +58,9 @@ class BagCollectionViewCell: UICollectionViewCell {
     }
     
     private func configureLabels() {
+        nameLabel.text = bagName
+        costLabel.text = "\(cost ?? 0)"
+        
         addSubview(nameLabel)
         addSubview(costLabel)
         

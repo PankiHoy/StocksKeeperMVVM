@@ -92,15 +92,16 @@ extension BuyBlockView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if buyCell?.opened == true {
+            if indexPath.row > 0 {
+                let cell = tableView.visibleCells[indexPath.row]
+                guard let bagName = cell.textLabel?.text else { return }
+                guard let bag = delegateController?.viewModel?.fetchBag(name: bagName) else { return }
+                guard let stock = getStock() else { return }
+                bag.addToStocks(stock)
+                bag.profit += stock.cost
+                delegateController?.viewModel?.save()
+            }
             buyCell?.opened = false
-            let cell = tableView.visibleCells[indexPath.row]
-            guard let bagName = cell.textLabel?.text else { return }
-            guard let bag = delegateController?.viewModel?.fetchBag(name: bagName) else { return }
-            guard let stock = getStock() else { return }
-            bag.addToStocks(stock)
-            bag.profit += stock.cost
-            delegateController?.viewModel?.save()
-            
             tableView.reloadData()
         } else {
             buyCell?.opened = true

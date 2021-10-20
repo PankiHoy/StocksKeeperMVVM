@@ -10,6 +10,37 @@ import UIKit
 class AddBagView: UIView {
     weak var delegate: BagViewController?
     
+    static let rsGreen = UIColor(named: "rsGreen")
+    static let rsLightBlue = UIColor(named: "rsLightBlue")
+    static let rsOrange = UIColor(named: "rsOrange")
+    static let rsPink = UIColor(named: "rsPink")
+    static let rsPurple = UIColor(named: "rsPurple")
+    static let rsRed = UIColor(named: "rsRed")
+    static let rsYellow = UIColor(named: "rsYellow")
+    
+    let colors = [
+        UIColor.rsGreen,
+        UIColor.rsLightBlue,
+        UIColor.rsOrange,
+        UIColor.rsPink,
+        UIColor.rsPurple,
+        UIColor.rsRed,
+        UIColor.rsYellow,
+    ]
+    
+    lazy var colorCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 5
+        
+        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        view.showsHorizontalScrollIndicator = false
+        view.showsVerticalScrollIndicator = false
+        view.backgroundColor = .white
+        view.isHidden = true
+        
+        return view
+    }()
+    
     let contentView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -38,6 +69,7 @@ class AddBagView: UIView {
     }
     
     func setup() {
+        configureColorCollcetionView()
         configureLabels()
     }
     
@@ -54,7 +86,7 @@ class AddBagView: UIView {
         
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = 20
+        stackView.spacing = 15
         
         contentView.addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -102,32 +134,46 @@ class AddBagView: UIView {
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(nameTextField)
         stackView.addArrangedSubview(themeLabel)
+        stackView.addArrangedSubview(colorCollectionView)
         stackView.addArrangedSubview(addButton)
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         nameTextField.translatesAutoresizingMaskIntoConstraints = false
         themeLabel.translatesAutoresizingMaskIntoConstraints = false
+        colorCollectionView.translatesAutoresizingMaskIntoConstraints = false
         addButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: stackView.topAnchor, constant: 20),
-            titleLabel.heightAnchor.constraint(equalToConstant: 60),
+//            titleLabel.topAnchor.constraint(equalTo: stackView.topAnchor, constant: 5),
+            titleLabel.heightAnchor.constraint(equalToConstant: 40),
             titleLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 20),
             titleLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -20),
             
             nameTextField.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 20),
             nameTextField.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -20),
-            nameTextField.heightAnchor.constraint(equalToConstant: 50),
+            nameTextField.heightAnchor.constraint(equalToConstant: 40),
             
             themeLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 20),
             themeLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -20),
-            themeLabel.heightAnchor.constraint(equalToConstant: 50),
+            themeLabel.heightAnchor.constraint(equalToConstant: 40),
+            
+            colorCollectionView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 20),
+            colorCollectionView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -20),
+            colorCollectionView.heightAnchor.constraint(equalToConstant: 20),
             
             addButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 20),
             addButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -20),
             addButton.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: -20),
-            addButton.heightAnchor.constraint(equalToConstant: 50)
         ])
+    }
+    
+    func configureColorCollcetionView() {
+        colorCollectionView.delegate = self
+        colorCollectionView.dataSource = self
+        colorCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "colorCell")
+
+        addSubview(colorCollectionView)
+        colorCollectionView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     @objc func chooseThemeAction(sender: UITapGestureRecognizer) {
@@ -137,10 +183,42 @@ class AddBagView: UIView {
         UIView.animate(withDuration: 0.2, animations: {
             image?.transform = CGAffineTransform(rotationAngle: .pi/2)
         })
+        
+        colorCollectionView.isHidden = false
     }
     
     @objc func createBag(sender: UIButton) {
         guard let nameTextFieldText = nameTextField.text else { return }
         delegate?.createBag(sender: sender, name: nameTextFieldText)
+    }
+}
+
+extension AddBagView: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 20, height: 20)
+    }
+    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        let totalCellWidth = 20 * (colors.count-1)
+//        let totalSpacingWidth = 5 * (colors.count-1-1)
+//
+//        let leftInset = (collectionView.frame.width - CGFloat(totalCellWidth + totalSpacingWidth)) / 2
+//        let rightInset = leftInset
+//
+//        return UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: rightInset)
+//    }
+}
+
+extension AddBagView: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return colors.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "colorCell", for: indexPath)
+        cell.backgroundColor = colors[indexPath.row]
+        cell.layer.cornerRadius = 10
+        
+        return cell
     }
 }

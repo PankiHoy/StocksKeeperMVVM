@@ -28,7 +28,6 @@ class BagViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchBags()
-        bagCollectionView.reloadData()
     }
 
     override func viewDidLoad() {
@@ -43,9 +42,11 @@ class BagViewController: UIViewController {
     }
     
     func fetchBags() {
-        bags = viewModel?.fetchBags()?.sorted(by: { bag1, bag2 in
+        let array = viewModel?.fetchBags()?.sorted(by: { bag1, bag2 in
             bag1.name! < bag2.name!
         })
+        bags = array
+        bagCollectionView.reloadData()
     }
     
     @objc func addBag(sender: UIBarButtonItem) {
@@ -106,6 +107,7 @@ extension BagViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BagCollectionViewCell.identifier, for: indexPath) as! BagCollectionViewCell
+        let item = bags?[indexPath.row]
         cell.bagName = bags?[indexPath.row].name
         cell.cost = bags?[indexPath.row].profit
         cell.delegate = self

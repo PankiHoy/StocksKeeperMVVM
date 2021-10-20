@@ -11,7 +11,7 @@ import UIKit
 extension MainViewController {
     func configureTabBar() {
         tabBarController?.tabBar.isHidden = false
-        tabBarItem = UITabBarItem(title: "Favorites",
+        tabBarController?.tabBarItem = UITabBarItem(title: "Favorites",
                                   image: UIImage(systemName: "star"),
                                   selectedImage: UIImage(systemName: "star.fill"))
         tabBarController?.tabBar.tintColor = .black
@@ -71,7 +71,7 @@ extension MainViewController {
         bookmarkedStocksTableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            bookmarkedStocksTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            bookmarkedStocksTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             bookmarkedStocksTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             bookmarkedStocksTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
         ])

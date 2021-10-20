@@ -310,7 +310,7 @@
 			children = (
 				D7DCA00B271ECFC30012B943 /* BagViewController */,
 				D7DCA00C271ECFD40012B943 /* AddBagView */,
-				D7DCA00D271ECFF60012B943 /* HelperViews */,
+				D7DCA00D271ECFF60012B943 /* BagCollectionViewCell */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -339,12 +339,12 @@
 			path = AddBagView;
 			sourceTree = "<group>";
 		};
-		D7DCA00D271ECFF60012B943 /* HelperViews */ = {
+		D7DCA00D271ECFF60012B943 /* BagCollectionViewCell */ = {
 			isa = PBXGroup;
 			children = (
 				D7DC9FFB271B1F7E0012B943 /* BagCollectionViewCell.swift */,
 			);
-			path = HelperViews;
+			path = BagCollectionViewCell;
 			sourceTree = "<group>";
 		};
 		D7DCA00E271ED0110012B943 /* MainViewController */ = {
