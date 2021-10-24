@@ -118,10 +118,10 @@ extension BagViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BagCollectionViewCell.identifier, for: indexPath) as! BagCollectionViewCell
         let item = bags?[indexPath.row]
         cell.bagName = bags?[indexPath.row].name
-        cell.cost = bags?[indexPath.row].profit
+        cell.cost = bags?[indexPath.row].realProfit
         cell.delegate = self
         cell.configureCell()
         return cell
     }
-    
 }
+

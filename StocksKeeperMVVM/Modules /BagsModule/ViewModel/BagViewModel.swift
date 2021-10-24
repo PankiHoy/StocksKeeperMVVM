@@ -20,7 +20,7 @@ protocol BagViewModelProtocol {
 
 final class BagViewModel: BagViewModelProtocol {
     public var updateViewData: ((ViewData) -> ())?
-    private var networkService: NetworkServiceProtocol?
+    private let networkService: NetworkServiceProtocol?
     private let coreDataManager: CoreDataManagerProtocol?
     
     init(_ networkService: NetworkServiceProtocol, _ coreDataManager: CoreDataManagerProtocol) {

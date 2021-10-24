@@ -6,11 +6,12 @@
 //
 
 import UIKit
+import SnapKit
 
 class DetailedStockViewController: UIViewController {
     var viewModel: DetailedStockViewModel?
     
-    lazy var testView: DetailedControllerView = {
+    lazy var detailedView: DetailedControllerView = {
         let detailedView = DetailedControllerView()
         
         return detailedView
@@ -25,9 +26,13 @@ class DetailedStockViewController: UIViewController {
         view.backgroundColor = .white
         self.tabBarController?.tabBar.isHidden = true
 
-        view.addSubview(testView)
-        testView.frame = view.bounds
-        testView.delegate = self
+        view.addSubview(detailedView)
+        detailedView.translatesAutoresizingMaskIntoConstraints = false
+        
+        detailedView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        detailedView.delegate = self
         
         start()
         updateViews()
@@ -35,6 +40,9 @@ class DetailedStockViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let reloadButton = ReloadBarButtonItem()
+        reloadButton.delegate = self
+        navigationItem.setRightBarButton(reloadButton, animated: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -44,12 +52,17 @@ class DetailedStockViewController: UIViewController {
     
     private func updateViews() {
         viewModel?.updateViewData = { [weak self] viewData in
-            self?.testView.viewData = viewData
+            self?.detailedView.viewData = viewData
         }
     }
     
     private func start() {
         viewModel?.startFetch()
     }
+}
 
+extension DetailedStockViewController: ControllerWithReloadProtocol {
+    func reloadViewData(sender: UIBarButtonItem) {
+        viewModel?.fetchFromApi()
+    }
 }

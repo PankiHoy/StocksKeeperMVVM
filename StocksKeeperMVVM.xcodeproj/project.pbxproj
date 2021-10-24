@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,6 +11,13 @@
 		D745637B271980B2007EF0BB /* StocksBag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7456379271980B2007EF0BB /* StocksBag+CoreDataProperties.swift */; };
 		D74C3CBD27134DEF00FE7B66 /* DetailedControllerView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74C3CBC27134DEF00FE7B66 /* DetailedControllerView + Extension.swift */; };
 		D74C3CBF2713545D00FE7B66 /* UIFont + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74C3CBE2713545D00FE7B66 /* UIFont + Extension.swift */; };
+		D7523AEF272054CD00EB3289 /* GeneralStock+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7523AED272054CD00EB3289 /* GeneralStock+CoreDataClass.swift */; };
+		D7523AF0272054CD00EB3289 /* GeneralStock+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7523AEE272054CD00EB3289 /* GeneralStock+CoreDataProperties.swift */; };
+		D7523AF3272198EB00EB3289 /* Pods_StocksKeeperMVVM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D15BA08B919F27B3FFD4F22 /* Pods_StocksKeeperMVVM.framework */; };
+		D7523AF4272198EB00EB3289 /* Pods_StocksKeeperMVVM.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2D15BA08B919F27B3FFD4F22 /* Pods_StocksKeeperMVVM.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D7523AF82721A2D100EB3289 /* MyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7523AF72721A2D100EB3289 /* MyLabel.swift */; };
+		D7523AFF2722C38100EB3289 /* TouchableTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7523AFE2722C38100EB3289 /* TouchableTableView.swift */; };
+		D7523B012722EE9C00EB3289 /* ReloadBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7523B002722EE9C00EB3289 /* ReloadBarButtonItem.swift */; };
 		D7749515271045050003F14B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7749514271045050003F14B /* AppDelegate.swift */; };
 		D7749521271045080003F14B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7749520271045080003F14B /* Assets.xcassets */; };
 		D7749524271045080003F14B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7749522271045080003F14B /* LaunchScreen.storyboard */; };
@@ -28,8 +35,6 @@
 		D77495502710896E0003F14B /* DetailedControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D774954F2710896E0003F14B /* DetailedControllerView.swift */; };
 		D7988CFF27199D0C00193F42 /* UIColor + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7988CFE27199D0C00193F42 /* UIColor + Extension.swift */; };
 		D7B21B522715B3950001C146 /* StocksBagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B21B512715B3950001C146 /* StocksBagViewModel.swift */; };
-		D7B21B552715B41F0001C146 /* BookmarkedStocksTableView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B21B542715B41F0001C146 /* BookmarkedStocksTableView + Extension.swift */; };
-		D7B21B572715B6570001C146 /* BookmarkedStocksTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B21B562715B6570001C146 /* BookmarkedStocksTableView.swift */; };
 		D7B21B5A2715B9B10001C146 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B21B592715B9B10001C146 /* CoreDataManager.swift */; };
 		D7BF0726271858E200B0C2FF /* StocksBagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7BF0725271858E200B0C2FF /* StocksBagViewController.swift */; };
 		D7BF074B271876EC00B0C2FF /* StocksKeeperMVVM.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D7BF0749271876EC00B0C2FF /* StocksKeeperMVVM.xcdatamodeld */; };
@@ -43,11 +48,33 @@
 		D7DCA016272025D50012B943 /* ExpandableCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DCA015272025D50012B943 /* ExpandableCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		D7523AF5272198EB00EB3289 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D7523AF4272198EB00EB3289 /* Pods_StocksKeeperMVVM.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		2D15BA08B919F27B3FFD4F22 /* Pods_StocksKeeperMVVM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StocksKeeperMVVM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		395E1B954BA2F6AA122EF0D4 /* Pods-StocksKeeperMVVM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StocksKeeperMVVM.release.xcconfig"; path = "Target Support Files/Pods-StocksKeeperMVVM/Pods-StocksKeeperMVVM.release.xcconfig"; sourceTree = "<group>"; };
+		88F5B092FFC1C0E0CD4E27AF /* Pods-StocksKeeperMVVM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StocksKeeperMVVM.debug.xcconfig"; path = "Target Support Files/Pods-StocksKeeperMVVM/Pods-StocksKeeperMVVM.debug.xcconfig"; sourceTree = "<group>"; };
 		D7456378271980B2007EF0BB /* StocksBag+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StocksBag+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D7456379271980B2007EF0BB /* StocksBag+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StocksBag+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D74C3CBC27134DEF00FE7B66 /* DetailedControllerView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailedControllerView + Extension.swift"; sourceTree = "<group>"; };
 		D74C3CBE2713545D00FE7B66 /* UIFont + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont + Extension.swift"; sourceTree = "<group>"; };
+		D7523AED272054CD00EB3289 /* GeneralStock+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GeneralStock+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D7523AEE272054CD00EB3289 /* GeneralStock+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GeneralStock+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D7523AF72721A2D100EB3289 /* MyLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLabel.swift; sourceTree = "<group>"; };
+		D7523AFE2722C38100EB3289 /* TouchableTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchableTableView.swift; sourceTree = "<group>"; };
+		D7523B002722EE9C00EB3289 /* ReloadBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadBarButtonItem.swift; sourceTree = "<group>"; };
 		D7749511271045050003F14B /* StocksKeeperMVVM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StocksKeeperMVVM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7749514271045050003F14B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D7749520271045080003F14B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -67,8 +94,6 @@
 		D774954F2710896E0003F14B /* DetailedControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedControllerView.swift; sourceTree = "<group>"; };
 		D7988CFE27199D0C00193F42 /* UIColor + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Extension.swift"; sourceTree = "<group>"; };
 		D7B21B512715B3950001C146 /* StocksBagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksBagViewModel.swift; sourceTree = "<group>"; };
-		D7B21B542715B41F0001C146 /* BookmarkedStocksTableView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookmarkedStocksTableView + Extension.swift"; sourceTree = "<group>"; };
-		D7B21B562715B6570001C146 /* BookmarkedStocksTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkedStocksTableView.swift; sourceTree = "<group>"; };
 		D7B21B592715B9B10001C146 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		D7BF0725271858E200B0C2FF /* StocksBagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksBagViewController.swift; sourceTree = "<group>"; };
 		D7BF074A271876EC00B0C2FF /* StocksKeeperMVVM.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StocksKeeperMVVM.xcdatamodel; sourceTree = "<group>"; };
@@ -87,17 +112,53 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7523AF3272198EB00EB3289 /* Pods_StocksKeeperMVVM.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3ED587C1CD97FBA53DA6C460 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				88F5B092FFC1C0E0CD4E27AF /* Pods-StocksKeeperMVVM.debug.xcconfig */,
+				395E1B954BA2F6AA122EF0D4 /* Pods-StocksKeeperMVVM.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		8934402F17C516E6E90F4449 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2D15BA08B919F27B3FFD4F22 /* Pods_StocksKeeperMVVM.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D7523AF1272189CE00EB3289 /* StocksBagViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D7BF0725271858E200B0C2FF /* StocksBagViewController.swift */,
+			);
+			path = StocksBagViewController;
+			sourceTree = "<group>";
+		};
+		D7523AF2272189D600EB3289 /* ExpandableCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				D7DCA015272025D50012B943 /* ExpandableCollectionViewCell.swift */,
+			);
+			path = ExpandableCollectionViewCell;
+			sourceTree = "<group>";
+		};
 		D7749508271045040003F14B = {
 			isa = PBXGroup;
 			children = (
 				D7749513271045050003F14B /* StocksKeeperMVVM */,
 				D7749512271045050003F14B /* Products */,
+				3ED587C1CD97FBA53DA6C460 /* Pods */,
+				8934402F17C516E6E90F4449 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -179,8 +240,6 @@
 			isa = PBXGroup;
 			children = (
 				D7DCA00E271ED0110012B943 /* MainViewController */,
-				D7DCA010271ED02D0012B943 /* SearchBar */,
-				D7DCA00F271ED0190012B943 /* BookmarkedStocksTableVIew */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -205,7 +264,10 @@
 		D774953F271061C40003F14B /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				D7DCA010271ED02D0012B943 /* SearchBar */,
 				D7749540271061DB0003F14B /* DinamicTableView.swift */,
+				D7523AF72721A2D100EB3289 /* MyLabel.swift */,
+				D7523B002722EE9C00EB3289 /* ReloadBarButtonItem.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -239,6 +301,8 @@
 		D774954827107DAF0003F14B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D7523AED272054CD00EB3289 /* GeneralStock+CoreDataClass.swift */,
+				D7523AEE272054CD00EB3289 /* GeneralStock+CoreDataProperties.swift */,
 				D774954B27107FEB0003F14B /* DetailedViewData.swift */,
 			);
 			path = Model;
@@ -253,13 +317,6 @@
 			path = Stocksbag;
 			sourceTree = "<group>";
 		};
-		D7988CF7271984E200193F42 /* StockToBuy */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = StockToBuy;
-			sourceTree = "<group>";
-		};
 		D7B21B4E2715B3640001C146 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -271,8 +328,8 @@
 		D7B21B4F2715B3670001C146 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				D7BF0725271858E200B0C2FF /* StocksBagViewController.swift */,
-				D7DCA015272025D50012B943 /* ExpandableCollectionViewCell.swift */,
+				D7523AF1272189CE00EB3289 /* StocksBagViewController */,
+				D7523AF2272189D600EB3289 /* ExpandableCollectionViewCell */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -280,7 +337,6 @@
 		D7B21B502715B36C0001C146 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				D7988CF7271984E200193F42 /* StockToBuy */,
 				D7988CF6271984DC00193F42 /* Stocksbag */,
 			);
 			path = Model;
@@ -355,20 +411,11 @@
 			path = MainViewController;
 			sourceTree = "<group>";
 		};
-		D7DCA00F271ED0190012B943 /* BookmarkedStocksTableVIew */ = {
-			isa = PBXGroup;
-			children = (
-				D7B21B562715B6570001C146 /* BookmarkedStocksTableView.swift */,
-				D7B21B542715B41F0001C146 /* BookmarkedStocksTableView + Extension.swift */,
-			);
-			path = BookmarkedStocksTableVIew;
-			sourceTree = "<group>";
-		};
 		D7DCA010271ED02D0012B943 /* SearchBar */ = {
 			isa = PBXGroup;
 			children = (
-				D774953D271061760003F14B /* SearchBar + Extension .swift */,
 				D774953B271061670003F14B /* SearchBar.swift */,
+				D774953D271061760003F14B /* SearchBar + Extension .swift */,
 			);
 			path = SearchBar;
 			sourceTree = "<group>";
@@ -394,6 +441,7 @@
 			isa = PBXGroup;
 			children = (
 				D7DCA009271EC8F00012B943 /* BuyBlockView.swift */,
+				D7523AFE2722C38100EB3289 /* TouchableTableView.swift */,
 			);
 			path = BuyBlockView;
 			sourceTree = "<group>";
@@ -414,9 +462,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D7749528271045080003F14B /* Build configuration list for PBXNativeTarget "StocksKeeperMVVM" */;
 			buildPhases = (
+				389DF99E5FAFC21173804D81 /* [CP] Check Pods Manifest.lock */,
 				D774950D271045050003F14B /* Sources */,
 				D774950E271045050003F14B /* Frameworks */,
 				D774950F271045050003F14B /* Resources */,
+				5AF0F1E8DE5C5548A839F0C8 /* [CP] Embed Pods Frameworks */,
+				D7523AF5272198EB00EB3289 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -471,16 +522,58 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		389DF99E5FAFC21173804D81 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-StocksKeeperMVVM-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5AF0F1E8DE5C5548A839F0C8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-StocksKeeperMVVM/Pods-StocksKeeperMVVM-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-StocksKeeperMVVM/Pods-StocksKeeperMVVM-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-StocksKeeperMVVM/Pods-StocksKeeperMVVM-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		D774950D271045050003F14B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				D74C3CBF2713545D00FE7B66 /* UIFont + Extension.swift in Sources */,
-				D7B21B552715B41F0001C146 /* BookmarkedStocksTableView + Extension.swift in Sources */,
 				D7749515271045050003F14B /* AppDelegate.swift in Sources */,
 				D77495502710896E0003F14B /* DetailedControllerView.swift in Sources */,
 				D745637B271980B2007EF0BB /* StocksBag+CoreDataProperties.swift in Sources */,
+				D7523AF0272054CD00EB3289 /* GeneralStock+CoreDataProperties.swift in Sources */,
 				D774953C271061670003F14B /* SearchBar.swift in Sources */,
 				D7B21B522715B3950001C146 /* StocksBagViewModel.swift in Sources */,
 				D7749541271061DB0003F14B /* DinamicTableView.swift in Sources */,
@@ -488,11 +581,11 @@
 				D774954427106DDD0003F14B /* ModuleBuilder.swift in Sources */,
 				D774953A27105C3C0003F14B /* NetworkService .swift in Sources */,
 				D7DC9FFC271B1F7E0012B943 /* BagCollectionViewCell.swift in Sources */,
+				D7523AFF2722C38100EB3289 /* TouchableTableView.swift in Sources */,
 				D7DCA008271EBAC30012B943 /* MainViewController + Extension .swift in Sources */,
 				D7BF0726271858E200B0C2FF /* StocksBagViewController.swift in Sources */,
 				D745637A271980B2007EF0BB /* StocksBag+CoreDataClass.swift in Sources */,
 				D774954A27107DBE0003F14B /* DetailedStockViewModel.swift in Sources */,
-				D7B21B572715B6570001C146 /* BookmarkedStocksTableView.swift in Sources */,
 				D774953327105AFC0003F14B /* CompaniesData.swift in Sources */,
 				D7988CFF27199D0C00193F42 /* UIColor + Extension.swift in Sources */,
 				D7DCA002271C86B40012B943 /* BagViewController + Extension.swift in Sources */,
@@ -502,7 +595,10 @@
 				D774954E271080E20003F14B /* DetailedStockViewController.swift in Sources */,
 				D7DCA016272025D50012B943 /* ExpandableCollectionViewCell.swift in Sources */,
 				D74C3CBD27134DEF00FE7B66 /* DetailedControllerView + Extension.swift in Sources */,
+				D7523AF82721A2D100EB3289 /* MyLabel.swift in Sources */,
 				D7DCA00A271EC8F00012B943 /* BuyBlockView.swift in Sources */,
+				D7523B012722EE9C00EB3289 /* ReloadBarButtonItem.swift in Sources */,
+				D7523AEF272054CD00EB3289 /* GeneralStock+CoreDataClass.swift in Sources */,
 				D774953727105BA70003F14B /* MainViewModel.swift in Sources */,
 				D7B21B5A2715B9B10001C146 /* CoreDataManager.swift in Sources */,
 				D774953E271061760003F14B /* SearchBar + Extension .swift in Sources */,
@@ -643,6 +739,7 @@
 		};
 		D7749529271045080003F14B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 88F5B092FFC1C0E0CD4E27AF /* Pods-StocksKeeperMVVM.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -662,6 +759,7 @@
 		};
 		D774952A271045080003F14B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 395E1B954BA2F6AA122EF0D4 /* Pods-StocksKeeperMVVM.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

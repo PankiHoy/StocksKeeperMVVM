@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class AddBagView: UIView {
     weak var delegate: BagViewController?
@@ -77,12 +78,11 @@ class AddBagView: UIView {
         addSubview(contentView)
         contentView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            contentView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 200),
-            contentView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 40),
-            contentView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -40),
-            contentView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -200)
-        ])
+        contentView.snp.makeConstraints { make in
+            make.width.equalToSuperview().offset(-40)
+            make.height.equalTo(200)
+            make.centerX.centerY.equalToSuperview()
+        }
         
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -91,12 +91,10 @@ class AddBagView: UIView {
         contentView.addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-        ])
+        stackView.snp.makeConstraints { make in
+            make.bottom.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(20)
+        }
         
         let titleLabel = UILabel()
         titleLabel.text = "CREATE NEW BAG"
@@ -143,37 +141,33 @@ class AddBagView: UIView {
         colorCollectionView.translatesAutoresizingMaskIntoConstraints = false
         addButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-//            titleLabel.topAnchor.constraint(equalTo: stackView.topAnchor, constant: 5),
-            titleLabel.heightAnchor.constraint(equalToConstant: 40),
-            titleLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 20),
-            titleLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -20),
-            
-            nameTextField.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 20),
-            nameTextField.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -20),
-            nameTextField.heightAnchor.constraint(equalToConstant: 40),
-            
-            themeLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 20),
-            themeLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -20),
-            themeLabel.heightAnchor.constraint(equalToConstant: 40),
-            
-            colorCollectionView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 20),
-            colorCollectionView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -20),
-            colorCollectionView.heightAnchor.constraint(equalToConstant: 20),
-            
-            addButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 20),
-            addButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -20),
-            addButton.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: -20),
-        ])
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(20)
+            make.centerX.equalToSuperview()
+        }
+        
+        nameTextField.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+        }
+        
+        themeLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+        }
+        
+        colorCollectionView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+        }
+        
+        addButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-20)
+        }
     }
     
     func configureColorCollcetionView() {
         colorCollectionView.delegate = self
         colorCollectionView.dataSource = self
         colorCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "colorCell")
-
-        addSubview(colorCollectionView)
-        colorCollectionView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     @objc func chooseThemeAction(sender: UITapGestureRecognizer) {
@@ -195,18 +189,18 @@ class AddBagView: UIView {
 
 extension AddBagView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 20, height: 20)
+        return CGSize(width: 35, height: 35)
     }
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        let totalCellWidth = 20 * (colors.count-1)
-//        let totalSpacingWidth = 5 * (colors.count-1-1)
-//
-//        let leftInset = (collectionView.frame.width - CGFloat(totalCellWidth + totalSpacingWidth)) / 2
-//        let rightInset = leftInset
-//
-//        return UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: rightInset)
-//    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        let totalCellWidth = 20 * (colors.count-1)
+        let totalSpacingWidth = 5 * (colors.count-1-1)
+
+        let leftInset = (collectionView.frame.width - CGFloat(totalCellWidth + totalSpacingWidth)) / 2
+        let rightInset = leftInset
+
+        return UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: rightInset)
+    }
 }
 
 extension AddBagView: UICollectionViewDataSource {

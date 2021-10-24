@@ -17,7 +17,7 @@ class DetailedControllerView: UIView {
         }
     }
     
-    var company: DetailedViewData.CompanyOverview!// УБРАТЬ ЭТО НАХУЙ И СДЕЛАТЬ ПО НОРМАЛЬНОМУ
+    var company: DetailedViewData.CompanyOverview!//MARK: УБРАТЬ ЭТО И СДЕЛАТЬ ПО НОРМАЛЬНОМУ
     var delegate: DetailedStockViewController!
     
     lazy var contentView = makeContentView()
@@ -49,5 +49,4 @@ class DetailedControllerView: UIView {
         stackView = makeStackView(name: viewData?.name, symbol: viewData?.symbol, description: viewData?.description, day: viewData?.day, dayBefore: viewData?.dayBefore, bookmarked: viewData?.bookmarked)
         company = viewData
     }
-    
 }

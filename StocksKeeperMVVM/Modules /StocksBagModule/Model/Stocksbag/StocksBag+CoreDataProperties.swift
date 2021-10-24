@@ -20,9 +20,14 @@ extension StocksBag {
     @NSManaged public var profit: Double
     @NSManaged public var stocks: NSSet?
     
-    public var stocksArray: [StockToBuy] {
-        let stocksSet = stocks as? Set<StockToBuy> ?? []
+    public var stocksArray: [GeneralStock] {
+        let stocksSet = stocks as? Set<GeneralStock> ?? []
         return stocksSet.sorted(by: { $0.name ?? "" < $1.name ?? "" })
+    }
+    
+    public var realProfit: Double {
+        reloadProfit()
+        return profit
     }
 
 }
@@ -31,10 +36,10 @@ extension StocksBag {
 extension StocksBag {
 
     @objc(addStocksObject:)
-    @NSManaged public func addToStocks(_ value: StockToBuy)
+    @NSManaged public func addToStocks(_ value: GeneralStock)
 
     @objc(removeStocksObject:)
-    @NSManaged public func removeFromStocks(_ value: StockToBuy)
+    @NSManaged public func removeFromStocks(_ value: GeneralStock)
 
     @objc(addStocks:)
     @NSManaged public func addToStocks(_ values: NSSet)

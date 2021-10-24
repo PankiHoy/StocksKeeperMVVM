@@ -19,6 +19,16 @@ extension MainViewController {
                                   selectedImage: UIImage(systemName: "star.fill"))
     }
     
+    func configureEffects() {
+        bookmarkedStocksTableView.layer.cornerRadius = 20
+        bookmarkedStocksTableView.clipsToBounds = true
+        
+        bookmarkedStocksTableView.layer.shadowColor = UIColor.black.cgColor
+        bookmarkedStocksTableView.layer.shadowRadius = 2
+        bookmarkedStocksTableView.layer.shadowOpacity = 0.3
+        bookmarkedStocksTableView.layer.shadowOffset = CGSize(width: 2, height: 1)
+    }
+    
     func configureSearchBar() {
         initiateSearch(false)
         searchBar.showsCancelButton = false
@@ -75,31 +85,5 @@ extension MainViewController {
             bookmarkedStocksTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             bookmarkedStocksTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
         ])
-    }
-    
-    func initiateSearch(_ check: Bool) {
-        if check {
-            searchBar.searchTableView.delegate = self
-            searchBar.searchTableView.dataSource = self
-            
-            searchBar.searchTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-            
-            searchBar.searchTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 1))
-            
-            view.addSubview(searchBar.searchTableView)
-            searchBar.searchTableView.translatesAutoresizingMaskIntoConstraints = false
-            
-            NSLayoutConstraint.activate([
-                searchBar.searchTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-                searchBar.searchTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-                searchBar.searchTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10)
-            ])
-        } else {
-            if view.subviews.contains(searchBar.searchTableView) {
-                view.willRemoveSubview(searchBar.searchTableView)
-                searchBar.searchTableView.removeFromSuperview()
-                navigationItem.titleView = nil
-            }
-        }
     }
 }

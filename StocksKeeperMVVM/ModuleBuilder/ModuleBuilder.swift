@@ -10,6 +10,7 @@ import UIKit
 
 protocol ModuleBuilderProtocol {
     func createMainModule() -> UIViewController
+    func createBagsModule() -> UIViewController
     func createStocksBagModule(withBag bag: StocksBag) -> UIViewController
     func createDetailedStockModule(withSymbol symbol: String) -> UIViewController
 }

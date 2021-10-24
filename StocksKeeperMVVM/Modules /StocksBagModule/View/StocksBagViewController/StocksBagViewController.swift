@@ -8,12 +8,21 @@
 import UIKit
 
 class StocksBagViewController: UIViewController {
-    private let sizingCell = ExpandableCollectionViewCell()
+    private var sizingCell: ExpandableCollectionViewCell?
     
     var viewModel: StocksbagViewModelPrototocol?
     var bag: StocksBag?
     
-    lazy var stocksCollection: UICollectionView = {
+    private var emptyBagLabel: UILabel = {
+        let label = UILabel()
+        label.text = "This bag is empty rolfanHmm"
+        label.font = UIFont.robotoBold(withSize: 24)
+        label.textColor = .lightGray
+        
+        return label
+    }()
+    
+    private lazy var stocksCollection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         
@@ -36,13 +45,46 @@ class StocksBagViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureCover(show: bag?.stocksArray.isEmpty ?? true)
+        stocksCollection.reloadData()
+    }
+    
     override func viewDidLoad() {
+        let realodButton = ReloadBarButtonItem()
+        realodButton.delegate = self
+        navigationItem.setRightBarButton(realodButton, animated: true)
+        title = bag?.name
+        
         setup()
     }
     
     func setup() {
         view.backgroundColor = .white
         configureStocksCollection()
+    }
+
+    @objc func sellAllStocks(sender: UIBarButtonItem) {
+        viewModel?.deleteAll(type: GeneralStock.self)
+    }
+    
+    func configureCover(show: Bool) {
+        if show {
+            if !view.contains(emptyBagLabel) {
+                view.addSubview(emptyBagLabel)
+                emptyBagLabel.translatesAutoresizingMaskIntoConstraints = false
+                
+                NSLayoutConstraint.activate([
+                    emptyBagLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                    emptyBagLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+                ])
+            }
+        } else {
+            if view.subviews.contains(emptyBagLabel) {
+                emptyBagLabel.removeFromSuperview()
+            }
+        }
     }
     
     func configureStocksCollection() {
@@ -73,6 +115,18 @@ extension StocksBagViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
         collectionView.performBatchUpdates(nil)
+        
+        DispatchQueue.main.async {
+            guard let attributes = collectionView.layoutAttributesForItem(at: indexPath) else { return }
+            
+            let desiredOffset = attributes.frame.origin.y-20
+            let contentHeight = collectionView.collectionViewLayout.collectionViewContentSize.height
+            let maxPossibleOffset = contentHeight - collectionView.bounds.height
+            let finalOffset = max(min(desiredOffset, maxPossibleOffset), 0)
+            
+            collectionView.setContentOffset(CGPoint(x: 0, y: finalOffset), animated: true)
+        }
+        
         return true
     }
 }
@@ -81,7 +135,25 @@ extension StocksBagViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let isSelected = collectionView.indexPathsForSelectedItems?.contains(indexPath) ?? false
         
-        return CGSize(width: collectionView.bounds.width-40, height: isSelected ? 150 : 50)
+        sizingCell = ExpandableCollectionViewCell()
+        sizingCell?.frame = CGRect(
+            origin: .zero,
+            size: CGSize(width: collectionView.bounds.width - 40, height: 1000)
+        )
+        
+        sizingCell?.configureCell(withStock: bag?.stocksArray[indexPath.row])
+        sizingCell?.isSelected = isSelected
+        sizingCell?.setNeedsLayout()
+        sizingCell?.layoutIfNeeded()
+
+        let size = sizingCell?.systemLayoutSizeFitting(
+            CGSize(width: collectionView.bounds.width - 40, height: .greatestFiniteMagnitude),
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .defaultLow
+        )
+        sizingCell = nil
+
+        return size!
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -95,7 +167,7 @@ extension StocksBagViewController: UICollectionViewDelegateFlowLayout {
 
 extension StocksBagViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -104,7 +176,14 @@ extension StocksBagViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ExpandableCollectionViewCell.identifier, for: indexPath) as? ExpandableCollectionViewCell
+        cell?.configureCell(withStock: bag?.stocksArray[indexPath.row])
         
         return cell!
+    }
+}
+
+extension StocksBagViewController: ControllerWithReloadProtocol {
+    func reloadViewData(sender: UIBarButtonItem) {
+        
     }
 }

@@ -45,8 +45,8 @@ extension DetailedControllerView {
         
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
         
@@ -146,12 +146,12 @@ extension DetailedControllerView {
         stack.spacing = 10
         
         let dayValueLabel = UILabel()
-        dayValueLabel.text = day ?? "0"
+        dayValueLabel.text = String(format: "%.2f", Double(day ?? "0") ?? 0)
         dayValueLabel.font = UIFont.robotoMedium(withSize: 25)
         dayValueLabel.textAlignment = .center
         
         let dayBeforeLabel = UILabel()
-        dayBeforeLabel.text = dayBefore ?? "0"
+        dayBeforeLabel.text = String(format: "%.2f", Double(dayBefore ?? "0") ?? 0)
         dayBeforeLabel.font = UIFont.robotoMedium(withSize: 20)
         dayBeforeLabel.textColor = .gray
         dayBeforeLabel.textAlignment = .center

@@ -59,7 +59,7 @@ class BagCollectionViewCell: UICollectionViewCell {
     
     private func configureLabels() {
         nameLabel.text = bagName
-        costLabel.text = "\(cost ?? 0)"
+        costLabel.text = String(format: "%.2f", cost ?? 0)
         
         addSubview(nameLabel)
         addSubview(costLabel)

@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="GeneralStock" representedClassName=".GeneralStock" syncable="YES">
+        <attribute name="averageCost" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="latestCost" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="subStocks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StockToBuy"/>
+    </entity>
     <entity name="Stock" representedClassName=".Stock" syncable="YES" codeGenerationType="class">
         <attribute name="bookmarked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="day" optional="YES" attributeType="String"/>
@@ -12,7 +18,7 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="profit" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="theme" optional="YES" attributeType="String"/>
-        <relationship name="stocks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StockToBuy"/>
+        <relationship name="stocks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GeneralStock"/>
     </entity>
     <entity name="StockToBuy" representedClassName=".StockToBuy" syncable="YES" codeGenerationType="class">
         <attribute name="amount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -24,6 +30,7 @@
         <attribute name="symbol" optional="YES" attributeType="String"/>
     </entity>
     <elements>
+        <element name="GeneralStock" positionX="-54" positionY="63" width="128" height="89"/>
         <element name="Stock" positionX="-63" positionY="-18" width="128" height="133"/>
         <element name="StocksBag" positionX="-63" positionY="36" width="128" height="89"/>
         <element name="StockToBuy" positionX="-54" positionY="36" width="128" height="134"/>

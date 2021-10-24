@@ -10,10 +10,22 @@ import UIKit
 class MainViewController: UIViewController {
     var viewModel: MainViewModelProtocol!
     
-    lazy var searchBar = SearchBar()
-    lazy var bookmarkedStocksTableView = BookmarkedStocksTableView.makeTableView()
-    
     var bookmarks: [Stock]?
+    
+    lazy var searchBar: SearchBar = {
+        let bar = SearchBar()
+        return bar
+    }()
+    
+    lazy var bookmarkedStocksTableView: DinamicTableView = {
+        let tableView = DinamicTableView()
+        tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
+        tableView.layer.cornerRadius = 20
+        tableView.backgroundColor = .lightGray
+        
+        return tableView
+    }()
     
     lazy var bookmarksLabel: UILabel = {
         let label = UILabel()
@@ -50,11 +62,38 @@ class MainViewController: UIViewController {
     func setup() {
         configureTabBar()
         configureSearchBar()
+//        configureEffects()
     }
 
     func updateView() {
         viewModel.updateViewData = { [weak self] viewData in
             self?.searchBar.viewData = viewData
+        }
+    }
+    
+    func initiateSearch(_ check: Bool) {
+        if check {
+            searchBar.searchTableView.delegate = self
+            searchBar.searchTableView.dataSource = self
+            
+            searchBar.searchTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+            
+            searchBar.searchTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 1))
+            
+            view.addSubview(searchBar.searchTableView)
+            searchBar.searchTableView.translatesAutoresizingMaskIntoConstraints = false
+            
+            NSLayoutConstraint.activate([
+                searchBar.searchTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                searchBar.searchTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+                searchBar.searchTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10)
+            ])
+        } else {
+            if view.subviews.contains(searchBar.searchTableView) {
+                view.willRemoveSubview(searchBar.searchTableView)
+                searchBar.searchTableView.removeFromSuperview()
+                navigationItem.titleView = nil
+            }
         }
     }
     

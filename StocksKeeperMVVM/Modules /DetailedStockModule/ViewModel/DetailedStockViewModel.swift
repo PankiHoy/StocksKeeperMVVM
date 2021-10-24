@@ -17,12 +17,13 @@ protocol DetailedStockViewModelProtocol {
     func fetch<T: NSManagedObject>(type: T.Type) -> [T]?
     func fetchBags() -> [StocksBag]?
     func fetchBag(name: String) -> StocksBag?
+    func fetchFromApi()
 }
 
 final class DetailedStockViewModel: DetailedStockViewModelProtocol {
     public var updateViewData: ((DetailedViewData) -> ())?
-    private var networkService: NetworkServiceProtocol?
-    private var coreDataManager: CoreDataManagerProtocol?
+    private let networkService: NetworkServiceProtocol?
+    private let coreDataManager: CoreDataManagerProtocol?
     
     private var symbol: String!
     
@@ -38,37 +39,64 @@ final class DetailedStockViewModel: DetailedStockViewModelProtocol {
         if (coreDataManager?.fetch(Stock.self)?.contains(where: { stock in //if database already contains element by this key, then get it from db
             stock.symbol == symbol
         })) == true {
-            let fetchRequest = NSFetchRequest<Stock>(entityName: "Stock")
-            fetchRequest.predicate = NSPredicate(format: "symbol == %@", symbol)
-            DispatchQueue.global().async { [weak self] in
-                do {
-                    let dataBaseStock = try self?.coreDataManager?.viewContext.fetch(fetchRequest)
-                    let stock = DetailedViewData.CompanyOverview(name: dataBaseStock?.first?.name,
-                                                                 symbol: dataBaseStock?.first?.symbol,
-                                                                 description: dataBaseStock?.first?.desctiption,
-                                                                 day: dataBaseStock?.first?.day,
-                                                                 dayBefore: dataBaseStock?.first?.dayBefore,
-                                                                 bookmarked: dataBaseStock?.first?.bookmarked)
-                    self?.updateViewData?(.success(stock))
-                } catch {
-                    dump(error)
-                }
-            }
+            fetchFromCoreData()
         } else {
-            networkService?.getCompanyOverview(bySymbol: symbol, completion: { [weak self] result in
-                guard let self = self else { return }
-                switch result {
-                case .success(let company):
+            fetchFromApi()
+        }
+    }
+    
+    func fetchFromApi() {
+        networkService?.getCompanyOverview(bySymbol: symbol, completion: { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let company):
+                if (self.coreDataManager?.fetch(Stock.self)?.contains(where: { [weak self] stock in //MARK: REDO ME
+                    stock.symbol == self?.symbol //this whole thing is just to check wether stocks is bookmarked
+                })) == true {
+                    do {
+                        let fetchRequest = NSFetchRequest<Stock>(entityName: "Stock")
+                        fetchRequest.predicate = NSPredicate(format: "symbol == %@", self.symbol)
+                        let dataBaseStock = try self.coreDataManager?.viewContext.fetch(fetchRequest).first
+                        self.updateViewData?(.success(DetailedViewData.CompanyOverview(name: company?.name,
+                                                                                       symbol: company?.symbol,
+                                                                                       description: company?.description,
+                                                                                       day: company?.day,
+                                                                                       dayBefore: company?.dayBefore,
+                                                                                       bookmarked: dataBaseStock?.bookmarked)))
+                    } catch {
+                        dump(error.localizedDescription)
+                    }
+                } else {
                     self.updateViewData?(.success(DetailedViewData.CompanyOverview(name: company?.name,
                                                                                    symbol: company?.symbol,
                                                                                    description: company?.description,
                                                                                    day: company?.day,
                                                                                    dayBefore: company?.dayBefore,
-                                                                                   bookmarked: false)))
-                case .failure(let error):
-                    dump(error)
+                                                                                   bookmarked: company?.bookmarked)))
                 }
-            })
+                
+            case .failure(let error):
+                dump(error)
+            }
+        })
+    }
+    
+    func fetchFromCoreData() {
+        let fetchRequest = NSFetchRequest<Stock>(entityName: "Stock")
+        fetchRequest.predicate = NSPredicate(format: "symbol == %@", symbol)
+        DispatchQueue.global().async { [weak self] in
+            do {
+                let dataBaseStock = try self?.coreDataManager?.viewContext.fetch(fetchRequest)
+                let stock = DetailedViewData.CompanyOverview(name: dataBaseStock?.first?.name,
+                                                             symbol: dataBaseStock?.first?.symbol,
+                                                             description: dataBaseStock?.first?.desctiption,
+                                                             day: dataBaseStock?.first?.day,
+                                                             dayBefore: dataBaseStock?.first?.dayBefore,
+                                                             bookmarked: dataBaseStock?.first?.bookmarked)
+                self?.updateViewData?(.success(stock))
+            } catch {
+                dump(error)
+            }
         }
     }
     

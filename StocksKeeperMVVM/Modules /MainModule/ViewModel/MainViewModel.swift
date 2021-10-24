@@ -19,7 +19,7 @@ protocol MainViewModelProtocol {
 
 final class MainViewModel: MainViewModelProtocol {
     public var updateViewData: ((ViewData) -> ())?
-    private var networkService: NetworkServiceProtocol?
+    private let networkService: NetworkServiceProtocol?
     private let coreDataManager: CoreDataManagerProtocol?
     
     init(_ networkService: NetworkServiceProtocol, _ coreDataManager: CoreDataManagerProtocol) {

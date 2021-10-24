@@ -18,6 +18,20 @@ class BuyBlockView: UIView {
     var delegateView: DetailedControllerView?
     var buyCell: BuyCell?
     
+    lazy var contentView = UIView()
+    
+    lazy var countTextField: UITextField = {
+        let countTextField = UITextField()
+        countTextField.text = "1"
+        countTextField.textAlignment = .center
+        countTextField.textColor = .black
+        countTextField.layer.borderWidth = 0.8
+        countTextField.layer.borderColor = UIColor.lightLightGray?.cgColor
+        countTextField.tintColor = .black
+        
+        return countTextField
+    }()
+    
     lazy var tableView: DinamicTableView = {
         let view = DinamicTableView()
         view.showsVerticalScrollIndicator = false
@@ -33,27 +47,71 @@ class BuyBlockView: UIView {
     func setup() {
         fetchData()
         configureTableView()
+        configureCountTextField()
     }
     
     func fetchData() {
-        guard let bags = delegateController?.viewModel?.fetchBags() else { return }
+        guard let bags = delegateController?.viewModel?.fetchBags()?.sorted(by: { $0.name! < $1.name! }) else { return }
         buyCell = BuyCell(opened: false, title: "BUY", sectionData: bags)
     }
     
     func configureTableView() {
+        addSubview(contentView)
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            contentView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            contentView.topAnchor.constraint(equalTo: topAnchor),
+            contentView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            contentView.trailingAnchor.constraint(equalTo: trailingAnchor),
+        ])
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "buyTableViewCell")
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "bagsTableViewCell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "bagTableViewCell")
         
-        addSubview(tableView)
+        tableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tableViewTouched(sender:))))
+        
+        contentView.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: trailingAnchor)
+            tableView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -60)
         ])
+    }
+    
+    func configureCountTextField() {
+        contentView.addSubview(countTextField)
+        countTextField.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            countTextField.topAnchor.constraint(equalTo: contentView.topAnchor),
+            countTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            countTextField.widthAnchor.constraint(equalTo: contentView.heightAnchor),
+            countTextField.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 1)
+        ])
+    }
+    
+    @objc func tableViewTouched(sender: UITapGestureRecognizer) {
+        let point = sender.location(in: tableView)
+        let indexPath = tableView.indexPathForRow(at: point)
+        
+        if buyCell?.opened == true {
+            if indexPath!.row > 0 {
+                buyStock(indexPath: indexPath!)
+                delegateController?.viewModel?.save()
+            }
+            buyCell?.opened = false
+            tableView.reloadData()
+            countTextField.resignFirstResponder()
+        } else {
+            buyCell?.opened = true
+            tableView.reloadData()
+            countTextField.resignFirstResponder()
+        }
     }
 }
 
@@ -83,7 +141,7 @@ extension BuyBlockView: UITableViewDataSource {
             
             return cell!
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "bagsTableViewCell")
+            let cell = tableView.dequeueReusableCell(withIdentifier: "bagTableViewCell")
             cell?.textLabel?.text = buyCell?.sectionData[dataIndexPath].name
             
             return cell!
@@ -93,12 +151,7 @@ extension BuyBlockView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if buyCell?.opened == true {
             if indexPath.row > 0 {
-                let cell = tableView.visibleCells[indexPath.row]
-                guard let bagName = cell.textLabel?.text else { return }
-                guard let bag = delegateController?.viewModel?.fetchBag(name: bagName) else { return }
-                guard let stock = getStock() else { return }
-                bag.addToStocks(stock)
-                bag.profit += stock.cost
+                buyStock(indexPath: indexPath)
                 delegateController?.viewModel?.save()
             }
             buyCell?.opened = false
@@ -106,18 +159,52 @@ extension BuyBlockView: UITableViewDataSource {
         } else {
             buyCell?.opened = true
             tableView.reloadData()
+            tableView.setNeedsLayout()
+            tableView.layoutIfNeeded()
         }
     }
     
-    func getStock() -> StockToBuy? {
-        guard let company = delegateView?.company else { return nil }
-        guard let stock = delegateController?.viewModel?.add(type: StockToBuy.self) else { return nil }
-        stock.name = company.name
-        stock.day = company.day
-        stock.dayBefore = company.dayBefore
-        stock.dateOfBuying = Date()
-        stock.cost = Double(company.day ?? "0") ?? 0
+    func buyStock(indexPath: IndexPath) {
+        let cell = tableView.visibleCells[indexPath.row]
+        guard let bagName = cell.textLabel?.text else { return }
+        guard let bag = delegateController?.viewModel?.fetchBag(name: bagName) else { return }
+        guard let company = delegateView?.company else { return }
         
-        return stock
+        if let generalStock = bag.stocksArray.first(where: { $0.name == company.name }) {
+            /* this is just for case where i want to add by date(not by time) if let duplicateStock = generalStock.subStocksArray.first(where: { $0.dateOfBuying == Date() }) /*MARK: - KOSTIL' */ {
+                duplicateStock.amount += 1
+                delegateController?.viewModel?.save()
+                return
+            } else { */
+            guard let subStock = addStock(withData: company) else { return }
+            subStock.amount = Int64(countTextField.text!) ?? 1
+            subStock.cost = ((Double(subStock.day ?? "0") ?? 0) * Double(subStock.amount))
+            generalStock.addToSubStocks(subStock)
+            delegateController?.viewModel?.save()
+            return
+        }
+        
+        guard let generalStock = delegateController?.viewModel?.add(type: GeneralStock.self) else { return }
+        guard let subStock = addStock(withData: company) else { return }
+        generalStock.addToSubStocks(subStock)
+        generalStock.name = company.name
+        generalStock.reloadAverageCost()
+        
+        bag.addToStocks(generalStock)
+        
+        delegateController?.viewModel?.save()
+    }
+    
+    func addStock(withData data: DetailedViewData.CompanyOverview) -> StockToBuy? {
+        guard let subStock = delegateController?.viewModel?.add(type: StockToBuy.self) else { return nil }
+        subStock.symbol = data.symbol
+        subStock.name = data.name
+        subStock.day = data.day
+        subStock.dayBefore = data.dayBefore
+        subStock.dateOfBuying = Date()
+        subStock.amount = 1
+        subStock.cost = Double(subStock.amount) * Double(subStock.day ?? "0")!
+        
+        return subStock
     }
 }
