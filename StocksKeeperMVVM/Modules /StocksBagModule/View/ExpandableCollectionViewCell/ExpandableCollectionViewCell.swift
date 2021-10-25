@@ -8,8 +8,13 @@
 import UIKit
 import SnapKit
 
+protocol ControllerWithRemoveActionProtocol: AnyObject {
+    func removeGeneralStock(sender: UICollectionViewCell)
+}
+
 class ExpandableCollectionViewCell: UICollectionViewCell {
     static let identifier = "stocksCell"
+    weak var delegate: ControllerWithRemoveActionProtocol?
     
     var generalStock: GeneralStock?
     
@@ -61,6 +66,7 @@ class ExpandableCollectionViewCell: UICollectionViewCell {
         configureBottomContainerLabels()
         
         configureEffects()
+        configureActions()
     }
     
     func configureTopContainerLabels() {
@@ -267,6 +273,15 @@ class ExpandableCollectionViewCell: UICollectionViewCell {
             expandedConstaint = make.bottom.equalToSuperview().constraint
             expandedConstaint.layoutConstraints.first?.priority = .defaultLow
         }
+    }
+    
+    func configureActions() {
+        topContainer.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector( removeGeneralBag(sender:))))
+    }
+    
+    @objc func removeGeneralBag(sender: UILongPressGestureRecognizer) {
+        guard let cell = sender.view?.superview?.superview?.superview as? UICollectionViewCell else { return }
+        delegate?.removeGeneralStock(sender: cell)
     }
     
 }

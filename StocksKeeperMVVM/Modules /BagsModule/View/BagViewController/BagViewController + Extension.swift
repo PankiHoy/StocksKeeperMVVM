@@ -16,7 +16,6 @@ extension BagViewController {
         tabBarItem = UITabBarItem(title: "Your Bags",
                                   image: UIImage(systemName: "bag"),
                                   selectedImage: UIImage(systemName: "bag.fill"))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(addBag(sender:)))
     }
     
     func configureBagCollectionView() {
@@ -100,5 +99,37 @@ extension BagViewController {
                 sender.removeFromSuperview()
             })
         }
+    }
+    
+    func configureCover(show: Bool) {
+        if show {
+            if !view.contains(emptyBagLabel) {
+                view.addSubview(emptyBagLabel)
+                emptyBagLabel.translatesAutoresizingMaskIntoConstraints = false
+                
+                NSLayoutConstraint.activate([
+                    emptyBagLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                    emptyBagLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+                ])
+            }
+        } else {
+            if view.subviews.contains(emptyBagLabel) {
+                emptyBagLabel.removeFromSuperview()
+            }
+        }
+    }
+    
+    func configureSearchBar() {
+        initiateSearch(false)
+        searchBar.showsCancelButton = false
+        searchBar.text = ""
+        searchBar.delegate = self
+        searchBar.sizeToFit()
+        
+        navigationItem.rightBarButtonItem = (UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"),
+                                                             style: .plain,
+                                                             target: self,
+                                                             action: #selector(searchButtonTapped(sender:))))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(addBag(sender:)))
     }
 }

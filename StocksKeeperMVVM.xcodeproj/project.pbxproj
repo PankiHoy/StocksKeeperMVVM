@@ -16,7 +16,6 @@
 		D7523AF3272198EB00EB3289 /* Pods_StocksKeeperMVVM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D15BA08B919F27B3FFD4F22 /* Pods_StocksKeeperMVVM.framework */; };
 		D7523AF4272198EB00EB3289 /* Pods_StocksKeeperMVVM.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2D15BA08B919F27B3FFD4F22 /* Pods_StocksKeeperMVVM.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D7523AF82721A2D100EB3289 /* MyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7523AF72721A2D100EB3289 /* MyLabel.swift */; };
-		D7523AFF2722C38100EB3289 /* TouchableTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7523AFE2722C38100EB3289 /* TouchableTableView.swift */; };
 		D7523B012722EE9C00EB3289 /* ReloadBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7523B002722EE9C00EB3289 /* ReloadBarButtonItem.swift */; };
 		D7749515271045050003F14B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7749514271045050003F14B /* AppDelegate.swift */; };
 		D7749521271045080003F14B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7749520271045080003F14B /* Assets.xcassets */; };
@@ -73,7 +72,6 @@
 		D7523AED272054CD00EB3289 /* GeneralStock+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GeneralStock+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D7523AEE272054CD00EB3289 /* GeneralStock+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GeneralStock+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D7523AF72721A2D100EB3289 /* MyLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLabel.swift; sourceTree = "<group>"; };
-		D7523AFE2722C38100EB3289 /* TouchableTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchableTableView.swift; sourceTree = "<group>"; };
 		D7523B002722EE9C00EB3289 /* ReloadBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadBarButtonItem.swift; sourceTree = "<group>"; };
 		D7749511271045050003F14B /* StocksKeeperMVVM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StocksKeeperMVVM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7749514271045050003F14B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -441,7 +439,6 @@
 			isa = PBXGroup;
 			children = (
 				D7DCA009271EC8F00012B943 /* BuyBlockView.swift */,
-				D7523AFE2722C38100EB3289 /* TouchableTableView.swift */,
 			);
 			path = BuyBlockView;
 			sourceTree = "<group>";
@@ -581,7 +578,6 @@
 				D774954427106DDD0003F14B /* ModuleBuilder.swift in Sources */,
 				D774953A27105C3C0003F14B /* NetworkService .swift in Sources */,
 				D7DC9FFC271B1F7E0012B943 /* BagCollectionViewCell.swift in Sources */,
-				D7523AFF2722C38100EB3289 /* TouchableTableView.swift in Sources */,
 				D7DCA008271EBAC30012B943 /* MainViewController + Extension .swift in Sources */,
 				D7BF0726271858E200B0C2FF /* StocksBagViewController.swift in Sources */,
 				D745637A271980B2007EF0BB /* StocksBag+CoreDataClass.swift in Sources */,

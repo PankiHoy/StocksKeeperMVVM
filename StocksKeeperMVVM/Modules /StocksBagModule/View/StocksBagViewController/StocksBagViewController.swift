@@ -176,13 +176,32 @@ extension StocksBagViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ExpandableCollectionViewCell.identifier, for: indexPath) as? ExpandableCollectionViewCell
+        cell?.delegate = self
         cell?.configureCell(withStock: bag?.stocksArray[indexPath.row])
         
         return cell!
     }
 }
 
-extension StocksBagViewController: ControllerWithReloadProtocol {
+extension StocksBagViewController: ControllerWithReloadProtocol, ControllerWithRemoveActionProtocol {
+    func removeGeneralStock(sender: UICollectionViewCell) {
+        let alert = UIAlertController(title: "Delete This Stock?", message: "Are you sure you want to delete this transaction? All related data will be removed as well!", preferredStyle: .alert)
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
+            guard let generalStockIndexPath = self?.stocksCollection.indexPath(for: sender) else { return }
+            guard let generalStock = self?.bag?.stocksArray[generalStockIndexPath.row] else { return }
+            self?.removeStock(stock: generalStock)
+        })
+        
+        alert.addAction(deleteAction)
+        present(alert, animated: true)
+    }
+    
+    func removeStock(stock: GeneralStock) {
+        viewModel?.delete(object: stock)
+        stocksCollection.reloadData()
+        configureCover(show: bag?.stocksArray.isEmpty ?? false)
+    }
+    
     func reloadViewData(sender: UIBarButtonItem) {
         
     }

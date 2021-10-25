@@ -62,9 +62,8 @@ class MainViewController: UIViewController {
     func setup() {
         configureTabBar()
         configureSearchBar()
-//        configureEffects()
     }
-
+    
     func updateView() {
         viewModel.updateViewData = { [weak self] viewData in
             self?.searchBar.viewData = viewData
@@ -73,12 +72,8 @@ class MainViewController: UIViewController {
     
     func initiateSearch(_ check: Bool) {
         if check {
-            searchBar.searchTableView.delegate = self
-            searchBar.searchTableView.dataSource = self
-            
             searchBar.searchTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-            
-            searchBar.searchTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 1))
+            searchBar.searchTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
             
             view.addSubview(searchBar.searchTableView)
             searchBar.searchTableView.translatesAutoresizingMaskIntoConstraints = false
@@ -167,10 +162,7 @@ extension MainViewController: UITableViewDelegate {
     
     //MARK: - Selecting stock
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if tableView === searchBar.searchTableView {
-            let detailedController = (UIApplication.shared.delegate as! AppDelegate).router.createDetailedStockModule(withSymbol: searchBar.companies[indexPath.row].symbol ?? "AAPL")
-            navigationController?.pushViewController(detailedController, animated: true)
-        } else if tableView === bookmarkedStocksTableView {
+        if tableView === bookmarkedStocksTableView {
             let detailedController = (UIApplication.shared.delegate as! AppDelegate).router.createDetailedStockModule(withSymbol: bookmarks?[indexPath.row].symbol ?? "AAPL")
             navigationController?.pushViewController(detailedController, animated: true)
         }
@@ -180,9 +172,7 @@ extension MainViewController: UITableViewDelegate {
 //MARK: - TableViewDataSource
 extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView === searchBar.searchTableView {
-            return searchBar.companies.count
-        } else if tableView === bookmarkedStocksTableView {
+        if tableView === bookmarkedStocksTableView {
             return bookmarks?.count ?? 0
         } else {
             return 0
@@ -190,11 +180,7 @@ extension MainViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if tableView === searchBar.searchTableView {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
-            cell?.textLabel?.text = searchBar.companies[indexPath.row].name
-            return cell!
-        } else if tableView === bookmarkedStocksTableView {
+        if tableView === bookmarkedStocksTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: "bookMarkCell")
             cell?.textLabel?.text = bookmarks?[indexPath.row].name
             cell?.detailTextLabel?.text = bookmarks?[indexPath.row].day
@@ -205,8 +191,4 @@ extension MainViewController: UITableViewDataSource {
             return tableView.dequeueReusableCell(withIdentifier: "cell")!
         }
     }
-}
-
-extension UIViewController {
-    
 }

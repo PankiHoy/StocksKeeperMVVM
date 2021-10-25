@@ -10,6 +10,7 @@ import CoreData
 
 protocol BagViewModelProtocol {
     var updateViewData: ((ViewData)->())? {get set }
+    func startFetch(withSymbol symbol: String)
     func fetchBags() -> [StocksBag]?
     func fetchBag(name: String) -> StocksBag?
     func add<T: NSManagedObject>(type: T.Type) -> T?
@@ -26,6 +27,19 @@ final class BagViewModel: BagViewModelProtocol {
     init(_ networkService: NetworkServiceProtocol, _ coreDataManager: CoreDataManagerProtocol) {
         self.networkService = networkService
         self.coreDataManager = coreDataManager
+    }
+    
+    public func startFetch(withSymbol symbol: String) {
+        updateViewData?(.loading(ViewData.CompaniesData(companiesList: nil)))
+        networkService?.getCompaniesList(bySymbol: symbol, completion: { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let companiesList):
+                self.updateViewData?(.success(ViewData.CompaniesData(companiesList: companiesList)))
+            case .failure(let error):
+                dump(error)
+            }
+        })
     }
     
     func fetchBags() -> [StocksBag]? {

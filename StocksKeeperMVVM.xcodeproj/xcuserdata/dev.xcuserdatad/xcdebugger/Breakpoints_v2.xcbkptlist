@@ -62,25 +62,9 @@
             filePath = "StocksKeeperMVVM/Modules /DetailedStockModule/View/DetailedControllerView/DetailedControllerView + Extension.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "73"
-            endingLineNumber = "73"
+            startingLineNumber = "74"
+            endingLineNumber = "74"
             landmarkName = "makeStackView(name:symbol:description:day:dayBefore:bookmarked:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "FB007967-A0E3-4D07-BE06-94BFBBED12AE"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "StocksKeeperMVVM/Modules /DetailedStockModule/View/DetailedControllerView/DetailedControllerView + Extension.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
-            landmarkName = "makeContentView()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

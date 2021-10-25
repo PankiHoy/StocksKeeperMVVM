@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 extension DetailedControllerView {
     func makeBuyBlock() -> BuyBlockView {
@@ -47,7 +48,7 @@ extension DetailedControllerView {
             scrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+            scrollView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
         ])
         
         let contentView = UIView()
@@ -56,10 +57,10 @@ extension DetailedControllerView {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            contentView.topAnchor.constraint(equalTo: topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
         ])
         
         return contentView
@@ -74,9 +75,10 @@ extension DetailedControllerView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 20),
-            stackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 20),
-            stackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -20),
+            stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
         ])
         
         let nameLabel = UILabel()
@@ -98,7 +100,6 @@ extension DetailedControllerView {
         bookMarkLabel.setImage(UIImage(systemName: "bookmark.fill"), for: .selected)
         
         bookMarkLabel.isSelected = bookmarked ?? false
-        
         bookMarkLabel.addTarget(self, action: #selector(addBookMark(sender:)), for: .touchUpInside)
         
         horizontalStack.addArrangedSubview(symbolLabel)
@@ -107,8 +108,15 @@ extension DetailedControllerView {
         symbolLabel.translatesAutoresizingMaskIntoConstraints = false
         bookMarkLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        symbolLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/2).isActive = true
-        bookMarkLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/2).isActive = true
+        symbolLabel.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.width.equalTo(UIScreen.main.bounds.width/2-25)
+        }
+        
+        bookMarkLabel.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.width.equalTo(UIScreen.main.bounds.width/2-25)
+        }
         
         let descriptionLabel = UILabel()
         descriptionLabel.text = description ?? ""
@@ -122,28 +130,20 @@ extension DetailedControllerView {
         stackView.addArrangedSubview(stocksValuesBlock)
         stackView.addArrangedSubview(descriptionLabel)
         
-        stackView.bringSubviewToFront(stocksValuesBlock)
-        
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            nameLabel.heightAnchor.constraint(equalToConstant: 50),
-            nameLabel.topAnchor.constraint(equalTo: stackView.topAnchor, constant: 50),
-            descriptionLabel.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: -30)
-        ])
         
         return stackView
     }
     
     func configureStocksValues(day: String?, dayBefore: String?) -> UIStackView {
-        let horizontalStack = UIStackView()
+        let horizontalStack = TouchableStackView()
         horizontalStack.axis = .horizontal
         horizontalStack.spacing = 10
         
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.spacing = 10
+        stack.spacing = 5
         
         let dayValueLabel = UILabel()
         dayValueLabel.text = String(format: "%.2f", Double(day ?? "0") ?? 0)
@@ -180,10 +180,13 @@ extension DetailedControllerView {
         arrowUpLabel.translatesAutoresizingMaskIntoConstraints = false
         arrowDownLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            arrowUpLabel.heightAnchor.constraint(equalTo: arrowStack.heightAnchor, multiplier: 0.5),
-            arrowDownLabel.heightAnchor.constraint(equalTo: arrowStack.heightAnchor, multiplier: 0.5)
-        ])
+        arrowUpLabel.snp.makeConstraints { make in
+            make.height.equalToSuperview().dividedBy(2.2)
+        }
+        
+        arrowDownLabel.snp.makeConstraints { make in
+            make.height.equalToSuperview().dividedBy(2.2)
+        }
         
         stack.addArrangedSubview(dayValueLabel)
         stack.addArrangedSubview(dayBeforeLabel)
@@ -191,12 +194,31 @@ extension DetailedControllerView {
         dayBeforeLabel.translatesAutoresizingMaskIntoConstraints = false
         dayValueLabel.translatesAutoresizingMaskIntoConstraints = false
         
+        dayValueLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.height.equalToSuperview().dividedBy(2.2)
+        }
+        
+        dayBeforeLabel.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
+            make.height.equalToSuperview().dividedBy(2.2)
+        }
+        
+        let ZAGLUSHKAVIEW = UIView()
+        
         horizontalStack.addArrangedSubview(stack)
         horizontalStack.addArrangedSubview(arrowStack)
-        horizontalStack.addArrangedSubview(buyBlockView)
+        horizontalStack.addArrangedSubview(ZAGLUSHKAVIEW)
         
-        horizontalStack.bringSubviewToFront(buyBlockView)
-        stack.bringSubviewToFront(horizontalStack)
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        arrowStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        contentView.addSubview(buyBlockView)
+        buyBlockView.translatesAutoresizingMaskIntoConstraints = false
+        
+        buyBlockView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         
         return horizontalStack
     }
@@ -227,5 +249,27 @@ extension DetailedControllerView {
         stock.dayBefore = company.dayBefore
         stock.bookmarked = true
         delegate.viewModel?.save()
+    }
+}
+
+
+class TouchableStackView: UIStackView {
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        let inside = super.point(inside: point, with: event)
+        
+        if !inside {
+            for subview in subviews {
+                for subsubview in subview.subviews {
+                    for subsubsubview in subsubview.subviews {
+                        let pointInSubview = subsubsubview.convert(point, from: self)
+                        if subsubsubview.point(inside: pointInSubview, with: event) {
+                            return true
+                        }
+                    }
+                }
+            }
+        }
+        
+        return inside
     }
 }

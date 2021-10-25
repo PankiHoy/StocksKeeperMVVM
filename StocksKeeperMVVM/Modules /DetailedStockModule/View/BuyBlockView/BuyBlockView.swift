@@ -18,8 +18,6 @@ class BuyBlockView: UIView {
     var delegateView: DetailedControllerView?
     var buyCell: BuyCell?
     
-    lazy var contentView = UIView()
-    
     lazy var countTextField: UITextField = {
         let countTextField = UITextField()
         countTextField.text = "1"
@@ -56,42 +54,30 @@ class BuyBlockView: UIView {
     }
     
     func configureTableView() {
-        addSubview(contentView)
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            contentView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            contentView.topAnchor.constraint(equalTo: topAnchor),
-            contentView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            contentView.trailingAnchor.constraint(equalTo: trailingAnchor),
-        ])
-        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "buyTableViewCell")
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "bagTableViewCell")
         
-        tableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tableViewTouched(sender:))))
-        
-        contentView.addSubview(tableView)
+        addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -60)
+            tableView.topAnchor.constraint(equalTo: topAnchor, constant: 120),
+            tableView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 110),
+            tableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -85),
         ])
     }
     
     func configureCountTextField() {
-        contentView.addSubview(countTextField)
+        addSubview(countTextField)
         countTextField.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            countTextField.topAnchor.constraint(equalTo: contentView.topAnchor),
-            countTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            countTextField.widthAnchor.constraint(equalTo: contentView.heightAnchor),
-            countTextField.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 1)
+            countTextField.topAnchor.constraint(equalTo: topAnchor, constant: 120),
+            countTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            countTextField.widthAnchor.constraint(equalToConstant: 50),
+            countTextField.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
@@ -106,12 +92,21 @@ class BuyBlockView: UIView {
             }
             buyCell?.opened = false
             tableView.reloadData()
-            countTextField.resignFirstResponder()
         } else {
             buyCell?.opened = true
             tableView.reloadData()
             countTextField.resignFirstResponder()
         }
+    }
+}
+
+extension BuyBlockView {
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let view = super.hitTest(point, with: event)
+        if view === self {
+            return nil
+        }
+        return view
     }
 }
 
@@ -131,19 +126,16 @@ extension BuyBlockView: UITableViewDelegate {
 }
 
 extension BuyBlockView: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let dataIndexPath = indexPath.row-1
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "buyTableViewCell")
             cell?.textLabel?.text = buyCell?.title
             cell?.textLabel?.textAlignment = .center
-            
             return cell!
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "bagTableViewCell")
             cell?.textLabel?.text = buyCell?.sectionData[dataIndexPath].name
-            
             return cell!
         }
     }
@@ -155,9 +147,11 @@ extension BuyBlockView: UITableViewDataSource {
                 delegateController?.viewModel?.save()
             }
             buyCell?.opened = false
+            countTextField.resignFirstResponder()
             tableView.reloadData()
         } else {
             buyCell?.opened = true
+            countTextField.resignFirstResponder()
             tableView.reloadData()
             tableView.setNeedsLayout()
             tableView.layoutIfNeeded()

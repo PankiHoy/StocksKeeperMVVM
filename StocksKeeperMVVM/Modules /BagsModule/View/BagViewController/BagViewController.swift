@@ -12,7 +12,20 @@ class BagViewController: UIViewController {
     
     lazy var searchBar = SearchBar()
     
-    var bags: [StocksBag]?
+    var bags: [StocksBag]? {
+        didSet {
+            configureCover(show: bags?.isEmpty ?? false)
+        }
+    }
+    
+    lazy var emptyBagLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Add some bags!"
+        label.font = UIFont.robotoBold(withSize: 24)
+        label.textColor = .lightGray
+        
+        return label
+    }()
     
     lazy var bagCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -37,6 +50,7 @@ class BagViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchBags()
+        configureSearchBar()
     }
 
     override func viewDidLoad() {
@@ -48,6 +62,7 @@ class BagViewController: UIViewController {
         fetchBags()
         configureTabBar()
         configureBagCollectionView()
+        configureSearchBar()
     }
     
     func fetchBags() {
@@ -81,15 +96,78 @@ class BagViewController: UIViewController {
     }
     
     @objc func removeBag(sender: BagCollectionViewCell) {
-        guard let bagToRemoveName = sender.bagName else { return }
-        removeBag(bagName: bagToRemoveName)
+        let alert = UIAlertController(title: "Delete This Bag?", message: "Are you sure you want to delete this bag? All related data will be removed as well!", preferredStyle: .alert)
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
+            guard let bagIndexPath = self?.bagCollectionView.indexPath(for: sender) else { return }
+            guard let bagToRemove = self?.bags?[bagIndexPath.row] else { return }
+            self?.removeBag(bag: bagToRemove)
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { [weak self] _ in
+            self?.dismiss(animated: true)
+        })
+        
+        alert.addAction(deleteAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true, completion: nil)
     }
     
-    private func removeBag(bagName name: String) {
-        guard let bagToRemove = viewModel?.fetchBag(name: name) else { return }
-        viewModel?.delete(object: bagToRemove)
+    private func removeBag(bag: StocksBag) {
+        viewModel?.delete(object: bag)
         fetchBags()
         bagCollectionView.reloadData()
+    }
+    
+    func updateView() {
+        viewModel?.updateViewData = { [weak self] viewData in
+            self?.searchBar.viewData = viewData
+        }
+    }
+    
+    func initiateSearch(_ check: Bool) {
+        if check {
+            searchBar.searchTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+            
+            searchBar.searchTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+            
+            view.addSubview(searchBar.searchTableView)
+            searchBar.searchTableView.translatesAutoresizingMaskIntoConstraints = false
+            
+            NSLayoutConstraint.activate([
+                searchBar.searchTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                searchBar.searchTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+                searchBar.searchTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10)
+            ])
+        } else {
+            if view.subviews.contains(searchBar.searchTableView) {
+                view.willRemoveSubview(searchBar.searchTableView)
+                searchBar.searchTableView.removeFromSuperview()
+                navigationItem.titleView = nil
+            }
+        }
+    }
+    
+    @objc func searchButtonTapped(sender: UIButton) {
+        initiateSearch(true)
+        UIView.animate(withDuration: 0.2, animations: { [weak self] in
+            self?.navigationItem.titleView = self?.searchBar
+            self?.searchBar.showsCancelButton = true
+            self?.searchBar.becomeFirstResponder()
+            self?.navigationItem.rightBarButtonItem = nil
+            self?.navigationItem.leftBarButtonItem = nil
+        })
+    }
+}
+
+extension BagViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        viewModel?.startFetch(withSymbol: searchText)
+        updateView()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        initiateSearch(false)
+        configureSearchBar()
+        searchBar.resignFirstResponder()
     }
 }
 

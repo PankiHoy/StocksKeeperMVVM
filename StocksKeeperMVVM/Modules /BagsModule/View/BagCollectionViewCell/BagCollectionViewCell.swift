@@ -54,7 +54,7 @@ class BagCollectionViewCell: UICollectionViewCell {
         backgroundColor = .lightLightGray
         configureCellShadow()
         configureLabels()
-        //        configureAction()
+        configureAction()
     }
     
     private func configureLabels() {
