@@ -149,7 +149,7 @@ class ExpandableCollectionViewCell: UICollectionViewCell {
     func configureBottomContainerLabels() {
         guard let stocksArray = generalStock?.subStocksArray else { return }
         let stack = UIStackView()
-        stack.spacing = 10
+        stack.spacing = 15
         stack.axis = .vertical
         
         let horizontalGeneralStack = UIStackView()

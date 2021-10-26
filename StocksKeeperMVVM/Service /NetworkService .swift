@@ -41,7 +41,7 @@ class NetworkService: NetworkServiceProtocol {
         let urlString = "https://www.alphavantage.co/query?function=OVERVIEW&symbol=\(symbol)&apikey=6O8FZ2GBGJR485JE"
         guard let url = URL(string: urlString) else { return }
         
-        URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
+        session.dataTask(with: url) { [weak self] data, _, error in
             if let error = error {
                 completion(.failure(error))
                 return
