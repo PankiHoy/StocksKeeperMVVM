@@ -1,8 +1,8 @@
 //
 //  StocksBag+CoreDataClass.swift
-//  StocksKeeperMVVM
+//  
 //
-//  Created by dev on 15.10.21.
+//  Created by dev on 26.10.21.
 //
 //
 

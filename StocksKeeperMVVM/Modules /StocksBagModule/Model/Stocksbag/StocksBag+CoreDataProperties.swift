@@ -1,8 +1,8 @@
 //
 //  StocksBag+CoreDataProperties.swift
-//  StocksKeeperMVVM
+//  
 //
-//  Created by dev on 15.10.21.
+//  Created by dev on 26.10.21.
 //
 //
 
@@ -46,9 +46,5 @@ extension StocksBag {
 
     @objc(removeStocks:)
     @NSManaged public func removeFromStocks(_ values: NSSet)
-
-}
-
-extension StocksBag : Identifiable {
 
 }

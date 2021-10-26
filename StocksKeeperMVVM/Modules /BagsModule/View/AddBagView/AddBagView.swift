@@ -11,20 +11,11 @@ import SnapKit
 class AddBagView: UIView {
     weak var delegate: BagViewController?
     
-    static let rsGreen = UIColor(named: "rsGreen")
-    static let rsLightBlue = UIColor(named: "rsLightBlue")
-    static let rsOrange = UIColor(named: "rsOrange")
-    static let rsPink = UIColor(named: "rsPink")
-    static let rsPurple = UIColor(named: "rsPurple")
-    static let rsRed = UIColor(named: "rsRed")
-    static let rsYellow = UIColor(named: "rsYellow")
-    
     let colors = [
         UIColor.rsGreen,
         UIColor.rsLightBlue,
         UIColor.rsOrange,
         UIColor.rsPink,
-        UIColor.rsPurple,
         UIColor.rsRed,
         UIColor.rsYellow,
     ]
@@ -36,8 +27,7 @@ class AddBagView: UIView {
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.showsHorizontalScrollIndicator = false
         view.showsVerticalScrollIndicator = false
-        view.backgroundColor = .white
-        view.isHidden = true
+        view.backgroundColor = .clear
         
         return view
     }()
@@ -80,8 +70,9 @@ class AddBagView: UIView {
         
         contentView.snp.makeConstraints { make in
             make.width.equalToSuperview().offset(-40)
-            make.height.equalTo(200)
-            make.centerX.centerY.equalToSuperview()
+            make.height.equalTo(275)
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().offset(-75)
         }
         
         let stackView = UIStackView()
@@ -92,7 +83,7 @@ class AddBagView: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         stackView.snp.makeConstraints { make in
-            make.bottom.top.equalToSuperview()
+            make.top.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(20)
         }
         
@@ -103,16 +94,14 @@ class AddBagView: UIView {
         titleLabel.textAlignment = .center
 
         nameTextField.becomeFirstResponder()
+        nameTextField.delegate = self
         
         let themeLabel = UILabel()
         themeLabel.text = "Choose theme"
         themeLabel.font = UIFont.robotoItalic(withSize: 24)
         themeLabel.textColor = .black
         
-        themeLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(chooseThemeAction(sender:))))
-        themeLabel.isUserInteractionEnabled = true
-        
-        let arrowImage = UIImageView(image: UIImage(systemName: "arrowtriangle.forward"))
+        let arrowImage = UIImageView(image: UIImage(systemName: "arrowtriangle.down"))
         arrowImage.tintColor = .black
         
         themeLabel.addSubview(arrowImage)
@@ -132,8 +121,18 @@ class AddBagView: UIView {
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(nameTextField)
         stackView.addArrangedSubview(themeLabel)
-        stackView.addArrangedSubview(colorCollectionView)
-        stackView.addArrangedSubview(addButton)
+        
+        let colorCollectionViewView = UIView()
+        colorCollectionViewView.addSubview(colorCollectionView)
+        
+        colorCollectionView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(44)
+        }
+
+        contentView.addSubview(colorCollectionViewView)
+        contentView.addSubview(addButton)
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         nameTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -142,43 +141,37 @@ class AddBagView: UIView {
         addButton.translatesAutoresizingMaskIntoConstraints = false
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(20)
             make.centerX.equalToSuperview()
+            make.height.equalTo(40)
+            make.top.equalToSuperview().offset(12.5)
         }
         
         nameTextField.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
+            make.height.equalTo(35)
         }
         
         themeLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
+            make.height.equalTo(35)
         }
         
-        colorCollectionView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
+        colorCollectionViewView.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().offset(-65)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.height.equalTo(44)
         }
         
         addButton.snp.makeConstraints { make in
+            make.height.equalTo(40)
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-20)
+            make.bottom.equalToSuperview().offset(-12.5)
         }
     }
     
     func configureColorCollcetionView() {
         colorCollectionView.delegate = self
         colorCollectionView.dataSource = self
-        colorCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "colorCell")
-    }
-    
-    @objc func chooseThemeAction(sender: UITapGestureRecognizer) {
-        let label = sender.view
-        let image = label?.subviews.first
-        
-        UIView.animate(withDuration: 0.2, animations: {
-            image?.transform = CGAffineTransform(rotationAngle: .pi/2)
-        })
-        
-        colorCollectionView.isHidden = false
+        colorCollectionView.register(ColorCollectionViewCell.self, forCellWithReuseIdentifier: "colorCell")
     }
     
     @objc func createBag(sender: UIButton) {
@@ -187,19 +180,35 @@ class AddBagView: UIView {
     }
 }
 
+extension AddBagView: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
+
 extension AddBagView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 35, height: 35)
+        return CGSize(width: 40, height: 40)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        let totalCellWidth = 20 * (colors.count-1)
+        let totalCellWidth = 40 * (colors.count+1)
         let totalSpacingWidth = 5 * (colors.count-1-1)
 
         let leftInset = (collectionView.frame.width - CGFloat(totalCellWidth + totalSpacingWidth)) / 2
         let rightInset = leftInset
 
-        return UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: rightInset)
+        return UIEdgeInsets(top: 2, left: leftInset, bottom: 2, right: rightInset)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cellSubview = collectionView.cellForItem(at: indexPath)?.subviews.first
+        UIView.animate(withDuration: 0.2, animations: {
+            cellSubview?.frame = CGRect(x: 2, y: 2, width: 36, height: 36)
+            cellSubview?.layer.cornerRadius = 8
+            self.contentView.backgroundColor = cellSubview?.backgroundColor
+        })
     }
 }
 
@@ -209,10 +218,9 @@ extension AddBagView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "colorCell", for: indexPath)
-        cell.backgroundColor = colors[indexPath.row]
-        cell.layer.cornerRadius = 10
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "colorCell", for: indexPath) as? ColorCollectionViewCell
+        cell?.configureCell(withColor: colors[indexPath.row]!)
         
-        return cell
+        return cell!
     }
 }

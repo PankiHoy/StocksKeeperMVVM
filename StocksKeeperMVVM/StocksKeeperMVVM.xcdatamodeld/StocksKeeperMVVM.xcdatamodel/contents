@@ -17,7 +17,6 @@
     <entity name="StocksBag" representedClassName="StocksBag" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="profit" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="theme" optional="YES" attributeType="String"/>
         <relationship name="stocks" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="GeneralStock"/>
     </entity>
     <entity name="StockToBuy" representedClassName=".StockToBuy" syncable="YES" codeGenerationType="class">
@@ -32,7 +31,7 @@
     <elements>
         <element name="GeneralStock" positionX="-54" positionY="63" width="128" height="89"/>
         <element name="Stock" positionX="-63" positionY="-18" width="128" height="133"/>
-        <element name="StocksBag" positionX="-63" positionY="36" width="128" height="89"/>
+        <element name="StocksBag" positionX="-63" positionY="36" width="128" height="74"/>
         <element name="StockToBuy" positionX="-54" positionY="36" width="128" height="134"/>
     </elements>
 </model>

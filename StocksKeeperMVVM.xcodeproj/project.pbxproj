@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D745637A271980B2007EF0BB /* StocksBag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7456378271980B2007EF0BB /* StocksBag+CoreDataClass.swift */; };
-		D745637B271980B2007EF0BB /* StocksBag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7456379271980B2007EF0BB /* StocksBag+CoreDataProperties.swift */; };
+		D70B125C2728073A00197508 /* ColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70B125B2728073A00197508 /* ColorCollectionViewCell.swift */; };
+		D743A22B272810F3000C9A67 /* StocksBag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D743A229272810F3000C9A67 /* StocksBag+CoreDataProperties.swift */; };
+		D743A22C272810F3000C9A67 /* StocksBag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D743A22A272810F3000C9A67 /* StocksBag+CoreDataClass.swift */; };
 		D74C3CBD27134DEF00FE7B66 /* DetailedControllerView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74C3CBC27134DEF00FE7B66 /* DetailedControllerView + Extension.swift */; };
 		D74C3CBF2713545D00FE7B66 /* UIFont + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74C3CBE2713545D00FE7B66 /* UIFont + Extension.swift */; };
 		D7523AEF272054CD00EB3289 /* GeneralStock+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7523AED272054CD00EB3289 /* GeneralStock+CoreDataClass.swift */; };
@@ -65,8 +66,9 @@
 		2D15BA08B919F27B3FFD4F22 /* Pods_StocksKeeperMVVM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StocksKeeperMVVM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		395E1B954BA2F6AA122EF0D4 /* Pods-StocksKeeperMVVM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StocksKeeperMVVM.release.xcconfig"; path = "Target Support Files/Pods-StocksKeeperMVVM/Pods-StocksKeeperMVVM.release.xcconfig"; sourceTree = "<group>"; };
 		88F5B092FFC1C0E0CD4E27AF /* Pods-StocksKeeperMVVM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StocksKeeperMVVM.debug.xcconfig"; path = "Target Support Files/Pods-StocksKeeperMVVM/Pods-StocksKeeperMVVM.debug.xcconfig"; sourceTree = "<group>"; };
-		D7456378271980B2007EF0BB /* StocksBag+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StocksBag+CoreDataClass.swift"; sourceTree = "<group>"; };
-		D7456379271980B2007EF0BB /* StocksBag+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StocksBag+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D70B125B2728073A00197508 /* ColorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCollectionViewCell.swift; sourceTree = "<group>"; };
+		D743A229272810F3000C9A67 /* StocksBag+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StocksBag+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D743A22A272810F3000C9A67 /* StocksBag+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StocksBag+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D74C3CBC27134DEF00FE7B66 /* DetailedControllerView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailedControllerView + Extension.swift"; sourceTree = "<group>"; };
 		D74C3CBE2713545D00FE7B66 /* UIFont + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont + Extension.swift"; sourceTree = "<group>"; };
 		D7523AED272054CD00EB3289 /* GeneralStock+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GeneralStock+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -132,6 +134,14 @@
 				2D15BA08B919F27B3FFD4F22 /* Pods_StocksKeeperMVVM.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D70B1251272803C000197508 /* ColorCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				D70B125B2728073A00197508 /* ColorCollectionViewCell.swift */,
+			);
+			path = ColorCollectionViewCell;
 			sourceTree = "<group>";
 		};
 		D7523AF1272189CE00EB3289 /* StocksBagViewController */ = {
@@ -309,8 +319,8 @@
 		D7988CF6271984DC00193F42 /* Stocksbag */ = {
 			isa = PBXGroup;
 			children = (
-				D7456378271980B2007EF0BB /* StocksBag+CoreDataClass.swift */,
-				D7456379271980B2007EF0BB /* StocksBag+CoreDataProperties.swift */,
+				D743A22A272810F3000C9A67 /* StocksBag+CoreDataClass.swift */,
+				D743A229272810F3000C9A67 /* StocksBag+CoreDataProperties.swift */,
 			);
 			path = Stocksbag;
 			sourceTree = "<group>";
@@ -387,6 +397,7 @@
 		D7DCA00C271ECFD40012B943 /* AddBagView */ = {
 			isa = PBXGroup;
 			children = (
+				D70B1251272803C000197508 /* ColorCollectionViewCell */,
 				D7DC9FFE271C62290012B943 /* AddBagView.swift */,
 			);
 			path = AddBagView;
@@ -486,6 +497,7 @@
 				TargetAttributes = {
 					D7749510271045050003F14B = {
 						CreatedOnToolsVersion = 12.5.1;
+						LastSwiftMigration = 1250;
 					};
 				};
 			};
@@ -569,18 +581,18 @@
 				D74C3CBF2713545D00FE7B66 /* UIFont + Extension.swift in Sources */,
 				D7749515271045050003F14B /* AppDelegate.swift in Sources */,
 				D77495502710896E0003F14B /* DetailedControllerView.swift in Sources */,
-				D745637B271980B2007EF0BB /* StocksBag+CoreDataProperties.swift in Sources */,
 				D7523AF0272054CD00EB3289 /* GeneralStock+CoreDataProperties.swift in Sources */,
 				D774953C271061670003F14B /* SearchBar.swift in Sources */,
 				D7B21B522715B3950001C146 /* StocksBagViewModel.swift in Sources */,
 				D7749541271061DB0003F14B /* DinamicTableView.swift in Sources */,
+				D743A22B272810F3000C9A67 /* StocksBag+CoreDataProperties.swift in Sources */,
 				D774954C27107FEB0003F14B /* DetailedViewData.swift in Sources */,
 				D774954427106DDD0003F14B /* ModuleBuilder.swift in Sources */,
 				D774953A27105C3C0003F14B /* NetworkService .swift in Sources */,
 				D7DC9FFC271B1F7E0012B943 /* BagCollectionViewCell.swift in Sources */,
 				D7DCA008271EBAC30012B943 /* MainViewController + Extension .swift in Sources */,
 				D7BF0726271858E200B0C2FF /* StocksBagViewController.swift in Sources */,
-				D745637A271980B2007EF0BB /* StocksBag+CoreDataClass.swift in Sources */,
+				D70B125C2728073A00197508 /* ColorCollectionViewCell.swift in Sources */,
 				D774954A27107DBE0003F14B /* DetailedStockViewModel.swift in Sources */,
 				D774953327105AFC0003F14B /* CompaniesData.swift in Sources */,
 				D7988CFF27199D0C00193F42 /* UIColor + Extension.swift in Sources */,
@@ -599,6 +611,7 @@
 				D7B21B5A2715B9B10001C146 /* CoreDataManager.swift in Sources */,
 				D774953E271061760003F14B /* SearchBar + Extension .swift in Sources */,
 				D7BF074B271876EC00B0C2FF /* StocksKeeperMVVM.xcdatamodeld in Sources */,
+				D743A22C272810F3000C9A67 /* StocksBag+CoreDataClass.swift in Sources */,
 				D7DC9FF8271B002F0012B943 /* BagViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -739,6 +752,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J5KZWD7PSW;
 				INFOPLIST_FILE = StocksKeeperMVVM/Info.plist;
@@ -748,6 +762,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = MK.StocksKeeperMVVM;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -759,6 +774,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J5KZWD7PSW;
 				INFOPLIST_FILE = StocksKeeperMVVM/Info.plist;

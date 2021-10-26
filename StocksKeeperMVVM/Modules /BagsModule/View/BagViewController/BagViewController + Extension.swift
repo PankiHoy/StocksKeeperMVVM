@@ -68,8 +68,8 @@ extension BagViewController {
     func setupPopUp() {
         let addBagView = AddBagView()
         addBagView.delegate = self
-        addBagView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(viewTouchedWhenPopUpViewOnTop(sender:))))
-        addBagView.isUserInteractionEnabled = true
+//        addBagView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(viewTouchedWhenPopUpViewOnTop(sender:))))
+//        addBagView.isUserInteractionEnabled = true
 
         animate(in: true, sender: addBagView)
         addBagView.translatesAutoresizingMaskIntoConstraints = false
