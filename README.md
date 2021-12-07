@@ -6,4 +6,4 @@ if cocoapods not install go to project directory and do
 
 then do 
 
->*pods install*
+>*pod install*
